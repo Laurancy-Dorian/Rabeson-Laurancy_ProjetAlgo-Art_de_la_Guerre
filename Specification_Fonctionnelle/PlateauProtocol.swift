@@ -1,6 +1,6 @@
 
 // TODO bien definir ce qu'est x et y. Le front est 0, larriere est 1
-protocol PlateauProtocol {
+protocol PlateauProtocol : Sequence {
   init()
 
   mutating func ajouter_plateau(carte : CarteProtocol)

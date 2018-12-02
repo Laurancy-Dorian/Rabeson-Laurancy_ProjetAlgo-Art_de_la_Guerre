@@ -1,4 +1,4 @@
-protocol RoyaumeProtocol {
+protocol RoyaumeProtocol : Sequence {
   init()
 
   mutating func ajouter_royaume(carte : CarteProtocol)

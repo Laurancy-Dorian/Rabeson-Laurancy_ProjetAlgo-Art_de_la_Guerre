@@ -1,4 +1,4 @@
-Algorithme Français
+ART OF WAR - Algo en Français
 
 // === Initialisation de la partie === 
 

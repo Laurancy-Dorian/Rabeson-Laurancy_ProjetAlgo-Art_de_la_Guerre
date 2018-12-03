@@ -3,13 +3,13 @@
  	CarteProtocol (ou carte) est l'element avec lequel le reste du programme interagira.
  	Une Carte represente une unite sur un champ de bataille
 	Elle possede comme caracteristique
- 		- Un type, C'est la designations de la carte. Une carte peut etre par exemple un "roi", un "soldat", un "garde" ou un "archer".
+ 		- Un type, C'est la designation de la carte. Une carte peut etre par exemple un "roi", un "soldat", un "garde" ou un "archer".
 			Ce type sera surtout utile pour identifier la carte. De nouvelles unites avec des types differents pourraient etre crees.
 		- Une puissance d'attaque : C'est les degats que cette carte pourra effectuer lorsqu'elle attaquera une autre carte
 		- Un statut (ou position) : Une carte peut etre en statut defensif ou offensif. En fonction de ce statut, elle peut ne pas avoir le meme nombre de PV
 		- Des PV en statut defensif
 		- Des PV en statut offensif
-		- Une portee :
+		- Une portee : 
 
 		//TODO suite je sais pas si c'est bien ce que j'ai fait jusque la
 */
@@ -17,7 +17,7 @@ protocol CarteProtocol {
 
 	// init : -> CarteProtocol
 	// Creation d'une Carte, initialise sans caracteristique
-	init() // TODO Utile ? Requiert d'ajouter des preconditions dans les fonctions apres si on la laisse
+	//init() // TODO Utile ? Requiert d'ajouter des preconditions dans les fonctions apres si on la laisse
 
 
 	// init : String x Int x Int x Int x (Int,Int)[] -> CarteProtocol
@@ -43,7 +43,7 @@ protocol CarteProtocol {
 	// Pre : p_att represente la puissance d'attaque
 	// Pre : p_att > 0
 	// Post : La puissance d'attaque est changee pour celle donnee en parametre
-	mutating func puissance_attaque(p_att : Int)
+	//mutating func puissance_attaque(p_att : Int)
 
 
 	// pv_defensif : CarteProtocol -> CarteProtocol x Int
@@ -58,7 +58,7 @@ protocol CarteProtocol {
 	// Post : La valeur des pv_defensif est changee pour celle donnee en parametre
 	// 				Si cette valeur est inferieure a pv_offensif, lance une erreur et rien n'est fait
 	// TODO Correct ?
-	mutating func pv_defensif(pv_def : Int) trows
+	//mutating func pv_defensif(pv_def : Int) throws
 
 	// pv_offensif : CarteProtocol -> CarteProtocol x Int
 	// Post : retourne les pv de la carte lorsqu'elle est en statut offensif
@@ -71,10 +71,13 @@ protocol CarteProtocol {
 	// Post : La valeur des pv_offensif est changee pour celle donnee en parametre
 	// 				Si cette valeur est superieure a pv_defensif, lance une erreur et rien n'est fait
 	// TODO Correct ?
-	mutating func pv_offensif(pv_off : Int)
+	//mutating func pv_offensif(pv_off : Int) throws
 
 
-	// TODO : fonction get pv qui renvoie les pv en fonction du statut actuel de la carte
+	// pv_restant : CarteProtocol -> CarteProtocol x Int
+	// fonction get pv qui renvoie les pv en fonction du statut actuel de la carte
+	// Post : La difference entre les pv en fonction du statut actuel de la carte et les degats subits durant ce tour
+	func pv_restants() -> Int
 
 
 	// statut : CarteProtocol -> CarteProtocol x Int
@@ -93,11 +96,13 @@ protocol CarteProtocol {
 	mutating func statut(statut : Int) throws
 
 
-	// TODO specs
+	// portee : CarteProtocol x Int -> CarteProtocol x Int x Int
+	// Renvoie la portee de la carte
+	// Post : Retourne un tableau de tuples contenant les portees relatives a la carte
 	func portee() -> (Int,Int)[]
 
 	// TODO specs
-	mutating func portee(p : (Int,Int)[])
+	//mutating func portee(p : (Int,Int)[])
 
 
 	// type_carte : CarteProtocol -> CarteProtocol x String
@@ -109,7 +114,7 @@ protocol CarteProtocol {
 	// Modifie le type de la carte
 	// Pre : type ne peut pas etre une chaine de caracteres vide ""
 	// Post : Modifie le type de la carte par la valeur en parametre si la precondition est respectee
-	mutating func type_carte(type : String)
+	//mutating func type_carte(type : String)
 
 
 	// degats_subis : CarteProtocol -> CarteProtocol x Int
@@ -121,10 +126,26 @@ protocol CarteProtocol {
 	// Pre : degats represente les degats totaux subis par la carte
 	// Pre : degats ne peut pas etre negative
 	// Post : remplace les degats subis par la valeur passee en parametre si les pre sont verifiees
-	mutating func degats_subis(degats : Int) // TODO degats_subis Ou bien ResetDegats ???
+	mutating func degats_subis(degats : Int) 
 
-
-	// TODO OOOO
-	func attaque(carte_attaqee : CarteProtocol) -> Int
+	// attaque : CarteProtocol x CarteProtocol -> CarteProtocol x Int
+	// Carte courante (attaquante) attaque carte attaquee
+	/*
+		Lors d'une attaque, on compare les pv_offensifs de la carte courante aux pv_defensifs de la carte attaquee
+		Si les pv_offensifs de la carte courante sont superieurs aux pv_deffensifs de la carte attaquee
+			la carte attaquee meurt
+		Si les pv_offensifs de la carte courante sont egaux aux pv_deffensifs de la carte attaquee
+			la carte attaquee est capturee
+		Si les pv_offensifs de la carte courante sont inferieure aux pv_deffensifs de la carte attaquee
+			la carte attaquee subit des degats selon la puissance_attaque de la carte courante
+	*/
+	// Pre : la carte courante et la carte attaquee doivent etre sur le Plateau 
+	// Pre : la carte courante doit etre en statut defensif 
+	// Post : Retourne un entier qui represente la situation de la carte attaquee apres attaque
+	//			Entier negatif : la carte attaquee est morte
+	//			Entier nul : la carte attaquee est capturee 
+	//			Entier positif : les degats subits par la carte attaquee si elle n'a pas ete tuee ou capturee
+	// Post : la carte attaquante doit etre en statut offensif
+	func attaque(carte_attaquee : CarteProtocol) -> Int
 
 }

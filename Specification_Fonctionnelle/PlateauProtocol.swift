@@ -80,7 +80,11 @@ protocol PlateauProtocol : Sequence {
   func carte_en_position(x : Int, y : Int) -> CarteProtocol?
 
   /*
-    TODODODODO
+    est_occupee : PlateauProtocol x Int x Int -> PlateauProtocol x Bool
+    Verifie si une case est occupee par une carte
+    Pre : x doit etre compris entre 0 et 2
+    Pre : y doit etre compris entre 0 et 1
+    Post : retourne true si la case est vide, false sinon
   */
   func est_occupee(x : Int, y : Int) -> Bool // TODO utile ? On a carte en position qui renvoie nil si y'en a pas
 

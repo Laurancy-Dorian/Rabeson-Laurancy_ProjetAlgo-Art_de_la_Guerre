@@ -35,7 +35,7 @@ protocol CarteProtocol {
 	// Param : pv_offensif est la valeur de pv maximum en statut offensif, elle doit etre strictement positive
 	// Param : pv_defensif >= pv_offensif
 	// Param : portee est un tableau de tuples qui representent chacun une direction possible de l'attaque de la carte.
-	init(type_carte : String, puissance_attaque : Int, pv_defensif : Int, pv_offensif : Int, portee : (Int,Int)[]) throws
+	init(type_carte : String, puissance_attaque : Int, pv_defensif : Int, pv_offensif : Int, portee : [(Int,Int)]) throws
 
 
 	// puissance_attaque : CarteProtocol -> CarteProtocol x Int
@@ -104,7 +104,7 @@ protocol CarteProtocol {
 	// portee : CarteProtocol x Int -> CarteProtocol x Int x Int
 	// Renvoie la portee de la carte
 	// Post : Retourne un tableau de tuples contenant les portees relatives a la carte
-	func portee() -> (Int,Int)[]
+	func portee() -> [(Int,Int)]
 
 	// TODO specs
 	//mutating func portee(p : (Int,Int)[])

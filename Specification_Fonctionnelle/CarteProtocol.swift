@@ -29,6 +29,7 @@ protocol CarteProtocol {
 	// init : String x Int x Int x Int x (Int,Int)[] -> CarteProtocol
 	// Creation d'une carte avec toutes ses caracteristiques (type, puissance d'attaque, statut, PV en statut offensif, pv en statut defensif, portee)
 	// Le statut est defini en defensif
+	// Les degats sont initialises a 0
 	// Param : type_carte est le nom du type de la carte. Elle ne peut pas etre une chaine vide
 	// Param : puissance_attaque est la puissance d'attaque de la carte, elle doit etre strictement positive
 	// Param : pv_defensif est la valeur de pv maximum en statut defensif, elle doit etre strictement positive
@@ -102,7 +103,7 @@ protocol CarteProtocol {
 	mutating func statut(statut : Int) throws
 
 
-	// portee : CarteProtocol x Int -> CarteProtocol x Int x Int
+	// portee : CarteProtocol x Int -> CarteProtocol x [(Int, Int)]
 	// Renvoie la portee de la carte
 	// Post : Retourne un tableau de tuples contenant les portees relatives a la carte
 	func portee() -> [(Int,Int)]
@@ -138,12 +139,12 @@ protocol CarteProtocol {
 	// attaque : CarteProtocol x CarteProtocol -> CarteProtocol x Int
 	// Carte courante (attaquante) attaque carte attaquee
 	/*
-		Lors d'une attaque, on compare les pv_offensifs de la carte courante aux pv_defensifs de la carte attaquee
-		Si les pv_offensifs de la carte courante sont superieurs aux pv_deffensifs de la carte attaquee
+		Lors d'une attaque, on compare la valeur d'attaque de la carte courante aux pv de la carte attaquee selon son statut (offensif ou defensif)
+		Si la valeur d'attaque de la carte courante sont superieurs aux pv de la carte attaquee selon son statut
 			la carte attaquee meurt
-		Si les pv_offensifs de la carte courante sont egaux aux pv_deffensifs de la carte attaquee
+		Si la valeur d'attaque de la carte courante sont egaux aux pv de la carte attaquee selon son statut
 			la carte attaquee est capturee
-		Si les pv_offensifs de la carte courante sont inferieure aux pv_deffensifs de la carte attaquee
+		Si la valeur d'attaque de la carte courante sont inferieure aux pv de la carte attaquee selon son statut
 			la carte attaquee subit des degats selon la puissance_attaque de la carte courante
 	*/
 	// Param : la carte a attaquer
@@ -154,6 +155,6 @@ protocol CarteProtocol {
 	//			Entier nul : la carte attaquee est capturee 
 	//			Entier positif : les degats subits par la carte attaquee si elle n'a pas ete tuee ou capturee
 	// Post : la carte attaquante doit etre en statut offensif
-	func attaque(carte_attaquee : CarteProtocol) -> Int
+	func attaque(carte_attaquee : CarteProtocol) -> Int throws
 
 }

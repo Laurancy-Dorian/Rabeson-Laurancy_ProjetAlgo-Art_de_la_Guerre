@@ -9,9 +9,15 @@
 		- Un statut (ou position) : Une carte peut etre en statut defensif ou offensif. En fonction de ce statut, elle peut ne pas avoir le meme nombre de PV
 		- Des PV en statut defensif
 		- Des PV en statut offensif
-		- Une portee : 
-
-		//TODO suite je sais pas si c'est bien ce que j'ai fait jusque la
+		- Une portee : C'est la direction relative qu'une carte peut atteindre 
+		Par exemple : un archer peut atteindre les directions (-2 ; 1), (-1 ; 2), (1 ; 2), (2 ; 1) 
+		par rapport a la position (x ; y) de la carte sur le Plateau. La direction (-2 ; 1) correspond a attaquer
+		"deux cases vers la gauche, une case vers l'avant"
+	
+	Une carte doit pouvoir :
+		- passer de statut defensif a statut offensif
+		- infliger des degats
+		- attaquer une autre carte
 */
 protocol CarteProtocol {
 
@@ -23,14 +29,13 @@ protocol CarteProtocol {
 	// init : String x Int x Int x Int x (Int,Int)[] -> CarteProtocol
 	// Creation d'une carte avec toutes ses caracteristiques (type, puissance d'attaque, statut, PV en statut offensif, pv en statut defensif, portee)
 	// Le statut est defini en defensif
-	// pre : type_carte est le nom du type de la carte. Elle ne peut pas etre une chaine vide
-	// pre : puissance_attaque est la puissance d'attaque de la carte, elle doit etre strictement positive
-	// pre : pv_defensif est la valeur de pv maximum en statut defensif, elle doit etre strictement positive
-	// pre : pv_offensif est la valeur de pv maximum en statut offensif, elle doit etre strictement positive
-	// pre : pv_defensif >= pv_offensif
-	// pre : portee est un tableau de tuples qui representent chacun une direction possible de l'attaque de la carte.
-	//			 Les valeurs des tuples ne peuvent pas etre negatives
-	init(type_carte : String, puissance_attaque : Int, pv_defensif : Int, pv_offensif : Int, portee : (Int,Int)[])
+	// Param : type_carte est le nom du type de la carte. Elle ne peut pas etre une chaine vide
+	// Param : puissance_attaque est la puissance d'attaque de la carte, elle doit etre strictement positive
+	// Param : pv_defensif est la valeur de pv maximum en statut defensif, elle doit etre strictement positive
+	// Param : pv_offensif est la valeur de pv maximum en statut offensif, elle doit etre strictement positive
+	// Param : pv_defensif >= pv_offensif
+	// Param : portee est un tableau de tuples qui representent chacun une direction possible de l'attaque de la carte.
+	init(type_carte : String, puissance_attaque : Int, pv_defensif : Int, pv_offensif : Int, portee : (Int,Int)[]) throws
 
 
 	// puissance_attaque : CarteProtocol -> CarteProtocol x Int
@@ -40,7 +45,7 @@ protocol CarteProtocol {
 
 	// puissance_attaque : CarteProtocol x Int -> CarteProtocol
 	// Modifie la puissance d'attaque
-	// Pre : p_att represente la puissance d'attaque
+	// Param : p_att represente la puissance d'attaque
 	// Pre : p_att > 0
 	// Post : La puissance d'attaque est changee pour celle donnee en parametre
 	//mutating func puissance_attaque(p_att : Int)
@@ -53,7 +58,7 @@ protocol CarteProtocol {
 
 	// pv_defensif : CarteProtocol x Int -> CarteProtocol
 	// Modifie les pv de la carte en statut defensif
-	// Pre : pv_def represente les pv en mode defensif
+	// Param : pv_def represente les pv en mode defensif
 	// Pre : pv_def > 0
 	// Post : La valeur des pv_defensif est changee pour celle donnee en parametre
 	// 				Si cette valeur est inferieure a pv_offensif, lance une erreur et rien n'est fait
@@ -66,7 +71,7 @@ protocol CarteProtocol {
 
 	// pv_offensif : CarteProtocol x Int -> CarteProtocol
 	// Modifie les pv de la carte en statut offensif
-	// Pre : pv_off represente les pv en mode offensif
+	// Param : pv_off represente les pv en mode offensif
 	// Pre : pv_off > 0
 	// Post : La valeur des pv_offensif est changee pour celle donnee en parametre
 	// 				Si cette valeur est superieure a pv_defensif, lance une erreur et rien n'est fait
@@ -89,7 +94,7 @@ protocol CarteProtocol {
 	// Modifie le statut de la carte.
 	// La carte est en statut DEFENSIF si son statut est a 0.
 	// La carte est en statut OFFENSIF si son statut est a 1.
-	// Pre : statut represente le nouveau statut de la carte
+	// Param : statut represente le nouveau statut de la carte
 	// Pre : Statut ne peut unique prendre comme valeur 0 ou 1
 	// Post : Modifie le statut en fonction de la valeur en parametre (carte en offensif si 1, carte en defensif si 0)
 	// 				Ne fait rien et genere une erreur si les precondition n'ont pas ete respectees
@@ -112,6 +117,7 @@ protocol CarteProtocol {
 
 	// type_carte : CarteProtocol x String -> CarteProtocol
 	// Modifie le type de la carte
+	// Param : chaine de caractere representant un type de carte
 	// Pre : type ne peut pas etre une chaine de caracteres vide ""
 	// Post : Modifie le type de la carte par la valeur en parametre si la precondition est respectee
 	//mutating func type_carte(type : String)
@@ -123,7 +129,7 @@ protocol CarteProtocol {
 
 
 	// degats_subis : CarteProtocol x Int -> CarteProtocol
-	// Pre : degats represente les degats totaux subis par la carte
+	// Param : degats represente les degats totaux subis par la carte
 	// Pre : degats ne peut pas etre negative
 	// Post : remplace les degats subis par la valeur passee en parametre si les pre sont verifiees
 	mutating func degats_subis(degats : Int) 
@@ -139,6 +145,7 @@ protocol CarteProtocol {
 		Si les pv_offensifs de la carte courante sont inferieure aux pv_deffensifs de la carte attaquee
 			la carte attaquee subit des degats selon la puissance_attaque de la carte courante
 	*/
+	// Param : la carte a attaquer
 	// Pre : la carte courante et la carte attaquee doivent etre sur le Plateau 
 	// Pre : la carte courante doit etre en statut defensif 
 	// Post : Retourne un entier qui represente la situation de la carte attaquee apres attaque

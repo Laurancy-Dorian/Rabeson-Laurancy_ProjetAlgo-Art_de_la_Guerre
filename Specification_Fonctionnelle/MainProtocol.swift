@@ -1,3 +1,9 @@
+/* MainProtocol (ou La Main) represente la collection qui contiendra des CarteProtocol (Cartes)
+  Une MainProtocol possede les caracteristiques suivantes :
+    On doit 
+
+*/
+
 protocol MainProtocol : Sequence {
   init()
 

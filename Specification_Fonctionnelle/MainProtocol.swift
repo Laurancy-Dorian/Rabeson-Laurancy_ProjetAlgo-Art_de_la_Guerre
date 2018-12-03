@@ -13,6 +13,8 @@ protocol MainProtocol : Sequence {
   */
   init()
 
+  func make_iterator()
+
   /*
     ajouter_main : MainProtocol x CarteProtocol -> MainProtocol
     Param : la carte a ajouter
@@ -52,4 +54,8 @@ protocol MainProtocol : Sequence {
   */
   func est_vide() -> Bool 
 
+}
+
+protocol MainProtocolIterator : IteratorProtocol {
+    func next()
 }

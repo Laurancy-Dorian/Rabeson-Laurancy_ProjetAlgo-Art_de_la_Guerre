@@ -9,7 +9,7 @@
 		- Un statut (ou position) : Une carte peut etre en statut defensif ou offensif. En fonction de ce statut, elle peut ne pas avoir le meme nombre de PV
 		- Des PV en statut defensif
 		- Des PV en statut offensif
-		- Une portee : C'est la direction relative qu'une carte peut atteindre 
+		- Une portee : C'est la direction relative qu'une carte peut atteindre (on ne peut pas se taper soi-meme)
 		Par exemple : un archer peut atteindre les directions (-2 ; 1), (-1 ; 2), (1 ; 2), (2 ; 1) 
 		par rapport a la position (x ; y) de la carte sur le Plateau. La direction (-2 ; 1) correspond a attaquer
 		"deux cases vers la gauche, une case vers l'avant"
@@ -34,7 +34,8 @@ protocol CarteProtocol {
 	// Param : pv_defensif est la valeur de pv maximum en statut defensif, elle doit etre strictement positive
 	// Param : pv_offensif est la valeur de pv maximum en statut offensif, elle doit etre strictement positive
 	// Param : pv_defensif >= pv_offensif
-	// Param : portee est un tableau de tuples qui representent chacun une direction possible de l'attaque de la carte.
+	// Param : portee est un tableau de tuples qui representent chacun une direction possible de l'attaque de la carte 
+	//			les deux elements des tuples ne peuvent pas etre nuls
 	init(type_carte : String, puissance_attaque : Int, pv_defensif : Int, pv_offensif : Int, portee : [(Int,Int)]) throws
 
 

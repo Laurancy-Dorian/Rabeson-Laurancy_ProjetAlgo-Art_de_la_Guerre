@@ -8,7 +8,7 @@ func test_init() -> Int {
   print ("== Test de l'init() ==");
 
   var c1 : CarteProtocol = Carte();
-  if let c = c1 {
+  if c1 {
     print ("Test init() ok");
   } else {
     print ("Test init() pas ok : la carte n'a pas ete initialise");
@@ -204,9 +204,105 @@ func test_pv_offensif() {
     print ("Test ok : valeur nulle pv_offensif");
   }
 
+  do {
+    try var c4 : CarteProtocol = Carte("Soldat", 4, 3, 5, portee);
+    print ("Test ko : Les pv_offensif ne peuvent pas etre etre superieur aux pv defensif");
+    return 0;
+  } catch {
+    print ("Test ok : pv_offensif > pv_defensif");
+  }
+
   print ("== Fin test pv_offensif() ==");
   return 1;
 }
+
+func test_statut() {
+  print ("== Test de statut() ==");
+
+  var portee : [(Int,Int)] = [(1,2), (0,1)];
+  // Carte valide
+  do {
+    try var c1 : CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+  } catch {
+    print ("Erreur d'init : Une carte valide a renvoye une exception");
+    return 0;
+  }
+
+  if (c1.statut() != 0) {
+    print ("Test ko : statut pas en defensif a la creation")
+    return 0;
+  }
+  else {
+    print ("Test ok : statut defensif a la creation")
+  }
+
+  do {
+    try c1.statut(1);
+    if (c1.statut == 1) {
+      print ("Test Ok : statut modifie correctement")
+    }
+    else {
+      print ("Test Ko : modification statut erreur : mauvaise valeur")
+      return 0
+    }
+  }catch {
+    print ("Test ko : exception sur statut alors que valide")
+    return 0;
+  }
+
+  do {
+    try c1.statut(2);
+    print ("Test Ko : Le statut ne peut etre que 1 ou 0")
+    return 0
+
+  }catch {
+    print ("Test Ok : 1 ou 0 pour le statut")
+  }
+
+
+  print ("== Fin test statut() ==");
+  return 1;
+}
+
+func test_portee() {
+  print ("== Test de portee() ==");
+
+  var portee : [(Int,Int)] = [(1,2), (0,1)];
+  // Carte valide
+  do {
+    try var c1 : CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+  } catch {
+    print ("Erreur d'init : Une carte valide a renvoye une exception");
+    return 0;
+  }
+
+  if (c1.portee() != portee) {
+    print ("Test ko : valeur de portee pas valide")
+    return 0;
+  }
+  else {
+    print ("Test ok : valeur portee valide")
+  }
+
+  var porteeNonValide : [(Int,Int)] = [(1,2), (0,0)];
+  // Carte valide
+  do {
+    try var c2 : CarteProtocol = Carte("Soldat", 3, 4, 3, porteeNonValide);
+    print ("Test ko : Portee (0,0)  non geree");
+    return 0;
+  } catch {
+    print ("Test Ok : Portee (0,0) geree");
+  }
+
+
+
+  print ("== Fin test portee() ==");
+  return 1;
+}
+
+
+
+
 
 // ==== Tests ====
 var nb_test_ok : Int = 0;
@@ -223,3 +319,12 @@ nb_test_ok += test_puissance_attaque();
 
 nb_test_tot += 1;
 nb_test_ok += test_pv_defensif();
+
+nb_test_tot += 1;
+nb_test_ok += test_pv_offensif();
+
+nb_test_tot += 1;
+nb_test_ok += test_statut();
+
+nb_test_tot += 1;
+nb_test_ok += test_portee();

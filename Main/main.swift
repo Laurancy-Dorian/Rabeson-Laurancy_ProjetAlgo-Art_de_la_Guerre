@@ -1,4 +1,4 @@
-
+import ArtOfWar
 
 ///////////////////////////////
 ////// ART OF WAR - MAIN //////
@@ -8,6 +8,7 @@
 // ===== FONCTIONS DU MAIN ===== //
 
 /*
+  lire_input :  -> String?
   Lis la ligne courante et la renvoie sous forme de chaine de caractere
   Return : La ligne ecrite si la lecture a fonctionne, nil sinon
 */
@@ -19,6 +20,8 @@ func lire_input() -> String? {
 }
 
 /*
+  input : String x [String] -> String
+
   Demande a l'utilisateur de saisir une expression dans le terminal
   Affiche un message et attend une reponse specifiqie. Continue a demandee tant qu'une reponse
   satisfaisante n'a pas ete saisie
@@ -27,18 +30,25 @@ func lire_input() -> String? {
     - rep_possibles   Un tableau de String contenant l'ensemble des reponses attendues
   Return : La reponse selectionnee par l'utilisateur
 */
-func input(msg : String = "Selectionnez votre reponse", rep_possibles : [String] = ["Y", "N"]) -> String {
+func input(_ msg : String = "Selectionnez votre reponse", _ rep_possibles : [String] = ["Y", "N"]) -> String {
   // Formate le message de demande sous la forme : Message (rep_attendue1, rep_attendue2 ...)
+  let message_a_afficher : String
   var choix_reponse : String = ""
-  var virgule : String = ""
-  for rep in rep_possibles {
-    choix_reponse += virgule + rep
-    virgule = ", "
+  if (!rep_possibles.isEmpty) {
+    var virgule : String = ""
+
+    for rep in rep_possibles {
+      choix_reponse += virgule + rep
+      virgule = ", "
+    }
+
+    message_a_afficher = msg + " (" + choix_reponse + ")"
   }
-  let message_a_afficher : String = msg + " (" + choix_reponse + ")"
+  else {
+    message_a_afficher = msg
+  }
 
   var reponse : String = ""
-
   // On recommence la boucle jusqu'a obtenir une reponse satisfaisante
 	while (reponse == "") {
     // Affiche le message
@@ -50,10 +60,16 @@ func input(msg : String = "Selectionnez votre reponse", rep_possibles : [String]
 
       // Verifie si la reponse est correcte
       var rep_correcte : Bool = false
-      for rep_attendue in rep_possibles {
-        if (reponse.lowercased() == rep_attendue.lowercased()) {
-          rep_correcte = true
+
+      if (!rep_possibles.isEmpty) {
+        for rep_attendue in rep_possibles {
+          if (reponse.lowercased() == rep_attendue.lowercased()) {
+            rep_correcte = true
+          }
         }
+      }
+      else {
+        rep_correcte = true
       }
 
       // Si la reponse n'est pas correcte, on affiche un message et on reinitialise la
@@ -71,6 +87,27 @@ func input(msg : String = "Selectionnez votre reponse", rep_possibles : [String]
   return reponse;
 }
 
+func str_carte_stats (_ c : CarteProtocol) -> String{
+  var str : String = "";
+  str += c.type_carte();
+  str += "\n Attaque : " + c.puissance_attaque()
+  if (c.statut() == 1) {
+    str += "\n Statut : Offensif"
+  } else {
+    str += "\n Statut : Defensif"
+  }
+  str += "\n PV en statut Defensif : " + c.pv_defensif()
+  str += "\n PV en statut Offensif : " + c.pv_offensif()
+
+  str += "\n PV restants : " + c.pv_restants()
+  return str;
+}
+
+func str_plateau (_ p : PlateauProtocol) {
+
+}
+
+func str_champ_bataille (_ p1 : PlateauProtocol, _ p2 : PlateauProtocol)
 
 
 // ===== MAIN ===== //

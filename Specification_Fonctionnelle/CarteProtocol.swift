@@ -155,6 +155,6 @@ protocol CarteProtocol {
 	//			Entier nul : la carte attaquee est capturee 
 	//			Entier positif : les degats subits par la carte attaquee si elle n'a pas ete tuee ou capturee
 	// Post : la carte attaquante doit etre en statut offensif
-	func attaque(carte_attaquee : CarteProtocol) -> Int throws
+	func attaque(carte_attaquee : CarteProtocol) throws -> Int 
 
 }

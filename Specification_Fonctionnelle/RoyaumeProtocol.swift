@@ -8,43 +8,43 @@
     - compter le nombre de cartes
 */
 
-protocol RoyaumeProtocol : Sequence {
-  
-  /*
-    init : -> RoyaumeProtocol
-    Creee un Royaume vide
-  */
-  init()
+protocol RoyaumeProtocol: Sequence {
 
-  /*
-    ajouter_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol
-    Ajoute une carte au Royaume
-    Pre : la carte a ajouter ne doit pas etre deja dans le Royaume
-    Post : ajoute la carte au Royaume
-  */
-  mutating func ajouter_royaume(carte : CarteProtocol)
+    /*
+      init : -> RoyaumeProtocol
+      Creee un Royaume vide
+    */
+    init()
 
-  /*
-    retirer_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol x CarteProtocol
-    Retire la premiere carte ajoutee au Royaume (FIFO)
-    Pre : la carte doit etre dans le Royaume
-    Post : retire la carte du Royaume
-  */
-  mutating func retirer_royaume(carte : CarteProtocol) -> CarteProtocol // TODO On renvoie ?
+    /*
+      ajouter_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol
+      Ajoute une carte au Royaume
+      Pre : la carte a ajouter ne doit pas etre deja dans le Royaume
+      Post : ajoute la carte au Royaume
+    */
+    mutating func ajouter_royaume(carte: CarteProtocol)
 
-  /*
-    est_vide : RoyaumeProtocol -> RoyaumeProtocol x Bool
-    Verifie si le Royaume est vide
-    Pre :
-    Post : retourne true si le Royaume est vide, false sinon
-  */
-  func est_vide() -> Bool
+    /*
+      retirer_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol x CarteProtocol
+      Retire la premiere carte ajoutee au Royaume (FIFO)
+      Pre : la carte doit etre dans le Royaume
+      Post : retire la carte du Royaume
+    */
+    mutating func retirer_royaume(carte: CarteProtocol) -> CarteProtocol // TODO On renvoie ?
 
-  /*
-    count_royaume : RoyaumeProtocol -> RoyaumeProtocol x Int
-    Compte le nombre de cartes dans le Royaume
-    Pre :
-    Post : retourne le nombre de cartes dans le Royaume
-  */
-  func count_royaume() -> Int
+    /*
+      est_vide : RoyaumeProtocol -> RoyaumeProtocol x Bool
+      Verifie si le Royaume est vide
+      Pre :
+      Post : retourne true si le Royaume est vide, false sinon
+    */
+    func est_vide() -> Bool
+
+    /*
+      count_royaume : RoyaumeProtocol -> RoyaumeProtocol x Int
+      Compte le nombre de cartes dans le Royaume
+      Pre :
+      Post : retourne le nombre de cartes dans le Royaume
+    */
+    func count_royaume() -> Int
 }

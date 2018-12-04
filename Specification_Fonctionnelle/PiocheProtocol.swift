@@ -6,30 +6,30 @@
 */
 
 protocol PiocheProtocol {
-  /*
-    init : -> PiocheProtocol
-    Creee une pioche vide
-  */
-  init()
+    /*
+      init : -> PiocheProtocol
+      Creee une pioche vide
+    */
+    init()
 
-  /*
-    piocher : PiocheProtocol -> PiocheProtocol x CarteProtocol?
-    Pre : 
-    Post : retourne une carte choisie au hasard dans la Pioche ou nil si la Pioche est vide
-  */
-  mutating func piocher() -> CarteProtocol?
+    /*
+      piocher : PiocheProtocol -> PiocheProtocol x CarteProtocol?
+      Pre :
+      Post : retourne une carte choisie au hasard dans la Pioche ou nil si la Pioche est vide
+    */
+    mutating func piocher() -> CarteProtocol?
 
-  /*
-    ajouter_pioche : PiocheProtocol x CarteProtocol -> PiocheProtocol
-    Param : carte a ajouter a la Pioche
-    Pre : la carte a ajouter ne doit pas etre deja dans la Pioche
-    Post : ajoute la carte a la Pioche 
-  */
-  mutating func ajouter_pioche(carte : CarteProtocol)
+    /*
+      ajouter_pioche : PiocheProtocol x CarteProtocol -> PiocheProtocol
+      Param : carte a ajouter a la Pioche
+      Pre : la carte a ajouter ne doit pas etre deja dans la Pioche
+      Post : ajoute la carte a la Pioche
+    */
+    mutating func ajouter_pioche(carte: CarteProtocol)
 
-  /*
-    count_pioche : PiocheProtocol -> PiocheProtocol x Int
-    Post : compte le nombre de carte dans la Pioche
-  */
-  func count_pioche() -> Int
+    /*
+      count_pioche : PiocheProtocol -> PiocheProtocol x Int
+      Post : compte le nombre de carte dans la Pioche
+    */
+    func count_pioche() -> Int
 }

@@ -8,13 +8,13 @@
     - compter le nombre de cartes
 */
 
-protocol RoyaumeProtocol: Sequence {
+public protocol RoyaumeProtocol: Sequence {
 
     /*
       init : -> RoyaumeProtocol
       Creee un Royaume vide
     */
-    init()
+    public init()
 
     /*
       ajouter_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol
@@ -22,7 +22,7 @@ protocol RoyaumeProtocol: Sequence {
       Pre : la carte a ajouter ne doit pas etre deja dans le Royaume
       Post : ajoute la carte au Royaume
     */
-    mutating func ajouter_royaume(carte: CarteProtocol)
+    public mutating func ajouter_royaume(carte: CarteProtocol)
 
     /*
       retirer_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol x CarteProtocol
@@ -30,7 +30,7 @@ protocol RoyaumeProtocol: Sequence {
       Pre : la carte doit etre dans le Royaume
       Post : retire la carte du Royaume
     */
-    mutating func retirer_royaume(carte: CarteProtocol) -> CarteProtocol // TODO On renvoie ?
+    public mutating func retirer_royaume(carte: CarteProtocol) -> CarteProtocol // TODO On renvoie ?
 
     /*
       est_vide : RoyaumeProtocol -> RoyaumeProtocol x Bool
@@ -38,7 +38,7 @@ protocol RoyaumeProtocol: Sequence {
       Pre :
       Post : retourne true si le Royaume est vide, false sinon
     */
-    func est_vide() -> Bool
+    public func est_vide() -> Bool
 
     /*
       count_royaume : RoyaumeProtocol -> RoyaumeProtocol x Int
@@ -46,5 +46,13 @@ protocol RoyaumeProtocol: Sequence {
       Pre :
       Post : retourne le nombre de cartes dans le Royaume
     */
-    func count_royaume() -> Int
+    public func count_royaume() -> Int
+
+    
+}
+
+public protocol ItRoyaumeProtocol: IteratorProtocol {
+
+
+  public mutating 
 }

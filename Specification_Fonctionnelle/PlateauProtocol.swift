@@ -28,12 +28,12 @@
     - savoir quelles sont les cartes qui peuvent encore attaquer lors d'un tour
 */
 // TODO bien definir ce qu'est x et y. Le front est 0, larriere est 1
-protocol PlateauProtocol: Sequence {
+public protocol PlateauProtocol: Sequence {
     /*
       init : -> PlateauProtocol
       Creee un plateau vide
     */
-    init()
+    public init()
     /*
       ajouter_plateau : PlateauProtocol x CarteProtocol -> PlateauProtocol
       Ajoute une carte au Front
@@ -41,7 +41,7 @@ protocol PlateauProtocol: Sequence {
       Pre : la case du plateau doit etre vide
       Post : la carte est ajoutee au plateau
     */
-    mutating func ajouter_plateau(carte: CarteProtocol) throws
+    public mutating func ajouter_plateau(carte: CarteProtocol) throws
 
     /*
       retirer_plateau : PlateauProtocol x CarteProtocol -> PlateauProtocol x CarteProtocol
@@ -50,15 +50,7 @@ protocol PlateauProtocol: Sequence {
       Pre : la carte a retirer doit etre sur le plateau
       Post : la carte est retiree du plateau
     */
-    mutating func retirer_plateau(carte: CarteProtocol) -> CarteProtocol
-
-    /*
-      cartes_sur_plateau : PlateauProtocol -> PlateauProtocol x [CarteProtocol]
-      Renvoie les cartes presentes sur le plateau
-      Pre :
-      Post : retourne un tableau de cartes qui sont presentes sur le plateau
-    */
-    func cartes_sur_plateau() -> [CarteProtocol]
+    public mutating func retirer_plateau(carte: CarteProtocol) -> CarteProtocol
 
     /*
       position_carte : PlateauProtocol x CarteProtocol -> PlateauProtocol x (Int, Int)
@@ -67,7 +59,7 @@ protocol PlateauProtocol: Sequence {
       Pre : la carte doit etre sur le plateau
       Post : retourne un tuple d'entier representant la position de la carte
     */
-    func position_carte(carte: CarteProtocol) -> (Int, Int)
+    public func position_carte(carte: CarteProtocol) -> (Int, Int)
 
     /*
       carte_en_position : PlateauProtocol x Int x Int -> PlateauProtocol x CarteProtocol
@@ -77,7 +69,7 @@ protocol PlateauProtocol: Sequence {
       Pre : y doit etre compris entre 0 et 1
       Post : retourne la carte a la position donnee au parametre
     */
-    func carte_en_position(x: Int, y: Int) -> CarteProtocol?
+    public func carte_en_position(x: Int, y: Int) -> CarteProtocol?
 
     /*
       est_occupee : PlateauProtocol x Int x Int -> PlateauProtocol x Bool
@@ -86,7 +78,7 @@ protocol PlateauProtocol: Sequence {
       Pre : y doit etre compris entre 0 et 1
       Post : retourne true si la case est vide, false sinon
     */
-    func est_occupee(x: Int, y: Int) -> Bool // TODO utile ? On a carte en position qui renvoie nil si y'en a pas
+    public func est_occupee(x: Int, y: Int) -> Bool // TODO utile ? On a carte en position qui renvoie nil si y'en a pas
 
     /*
       reorganiser_plateau : PlateauProtocol -> PlateauProtocol
@@ -98,7 +90,7 @@ protocol PlateauProtocol: Sequence {
       Pre :
       Post : modifie le placement des cartes sur le plateau
     */
-    mutating func reorganiser_plateau()
+    public mutating func reorganiser_plateau()
 
     /*
       plateau_vide : PlateauProtocol -> PlateauProtocol x Bool
@@ -106,7 +98,7 @@ protocol PlateauProtocol: Sequence {
       Pre :
       Post : retourne true si le tableau est vide, false sinon
     */
-    func plateau_vide() -> Bool
+    public func plateau_vide() -> Bool
 
     /*
       tuer : PlateauProtocol x CarteProtocol -> PlateauProtocol
@@ -114,7 +106,7 @@ protocol PlateauProtocol: Sequence {
       Pre : la carte doit etre sur le plateau
       Post : supprime la carte du plateau si elle meurt
     */
-    mutating func tuer(carte: CarteProtocol)
+    public mutating func tuer(carte: CarteProtocol)
 
     /*
       count_cartes_qui_peuvent_attaquer : PlateauProtocol -> PlateauProtocol x Int
@@ -125,7 +117,7 @@ protocol PlateauProtocol: Sequence {
       Pre :
       Post : retourne le nombre entier de carte qui peuvent encore attaquer
     */
-    func count_cartes_qui_peuvent_attaquer() -> Int
+    public func count_cartes_qui_peuvent_attaquer() -> Int
 
     /*
       cartes_qui_peuvent_attaquer : PlateauProtocol -> PlateauProtocol x [CarteProtocol]
@@ -136,5 +128,5 @@ protocol PlateauProtocol: Sequence {
       Pre :
       Post : retourne un tableau des cartes qui peuvent encore attaquer
     */
-    func cartes_qui_peuvent_attaquer() -> [CarteProtocol]
+    public func cartes_qui_peuvent_attaquer() -> [CarteProtocol]
 }

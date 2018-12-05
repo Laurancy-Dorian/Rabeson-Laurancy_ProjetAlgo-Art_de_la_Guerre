@@ -5,15 +5,15 @@
     On doit pouvoir savoir le nombre de cartes dans La Main
 */
 
-protocol MainProtocol: Sequence {
+public protocol MainProtocol: Sequence {
 
     /*
       init : -> MainProtocol
       Creee une Main vide
     */
-    init()
+    public init()
 
-    func make_iterator()
+    public func make_iterator()
 
     /*
       ajouter_main : MainProtocol x CarteProtocol -> MainProtocol
@@ -21,7 +21,7 @@ protocol MainProtocol: Sequence {
       Pre :
       Post : la carte est ajoutee a La Main
     */
-    mutating func ajouter_main(carte: CarteProtocol)
+    public mutating func ajouter_main(carte: CarteProtocol)
 
     /*
       retirer_main : MainProtocol x CarteProtocl -> MainProtocol x CarteProtocol
@@ -29,7 +29,7 @@ protocol MainProtocol: Sequence {
       Pre :
       Post : renvoie la carte retiree si elle est retiree
     */
-    mutating func retirer_main(carte: CarteProtocol) -> CarteProtocol // TODO verif si on renvoie vraiment vu qu'on la passe en parametre
+    public mutating func retirer_main(carte: CarteProtocol) -> CarteProtocol // TODO verif si on renvoie vraiment vu qu'on la passe en parametre
 
 
     /*
@@ -38,24 +38,24 @@ protocol MainProtocol: Sequence {
       Pre :
       Post : retourne un tableau de CarteProtocol
     */
-    func cartes_en_main() -> [CarteProtocol]
+    public func cartes_en_main() -> [CarteProtocol]
 
     /*
       count_main : MainProtocol -> MainProtocol x Int
       Pre :
       Post : retourne le nombre de carte dans la main
     */
-    func count_main() -> Int
+    public func count_main() -> Int
 
     /*
       est_vide : MainProtocol -> MainProtocol x Bool
       Pre :
       Post : retourne vrai si la main est vide
     */
-    func est_vide() -> Bool
+    public func est_vide() -> Bool
 
 }
 
-protocol MainProtocolIterator: IteratorProtocol {
-    func next()
+public protocol MainProtocolIterator: IteratorProtocol {
+    public func next()
 }

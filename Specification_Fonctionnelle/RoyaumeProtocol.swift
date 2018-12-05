@@ -48,11 +48,17 @@ public protocol RoyaumeProtocol: Sequence {
     */
     public func count_royaume() -> Int
 
-    
+    /*
+      makeIterator : RoyaumeProtocol -> Royaume x ItRoyaumeProtocol
+      cree un iterateur sur la collection de cartes en FIFO (premiere carte ajoutee, premiere carte sortie)
+    */
+    public func makeIterator() -> ItRoyaumeProtocol 
 }
 
 public protocol ItRoyaumeProtocol: IteratorProtocol {
-
-
-  public mutating 
+  /*
+    next : ItRoyaumeProtocol -> ItRoyaumeProtocol x CarteProtocol?
+    
+  */
+  public func next() -> CarteProtocol? 
 }

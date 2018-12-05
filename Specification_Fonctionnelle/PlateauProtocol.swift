@@ -118,15 +118,13 @@ public protocol PlateauProtocol: Sequence {
       Post : retourne le nombre entier de carte qui peuvent encore attaquer
     */
     public func count_cartes_qui_peuvent_attaquer() -> Int
+}
 
-    /*
-      cartes_qui_peuvent_attaquer : PlateauProtocol -> PlateauProtocol x [CarteProtocol]
-      Renseigne les cartes restantes qui peuvent encore attaquer sur le plateau
-      Les cartes qui peuvent encore attaquer pendant un tour sont les cartes en
-      position defensive (les cartes qui ont deja attaque sont en position offensive)
+public protocol ItPlateauProtocol : IteratorProtocol {
 
-      Pre :
-      Post : retourne un tableau des cartes qui peuvent encore attaquer
-    */
-    public func cartes_qui_peuvent_attaquer() -> [CarteProtocol]
+  /*
+    next : ItPlateauProtocol -> ItPlateauProtocol x CarteProtocol?
+    retourne la prochaine carte dans la collection du Plateau
+  */
+  public func next() -> CarteProtocol?
 }

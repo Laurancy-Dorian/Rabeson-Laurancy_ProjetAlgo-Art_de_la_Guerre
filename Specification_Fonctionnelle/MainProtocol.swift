@@ -57,5 +57,9 @@ public protocol MainProtocol: Sequence {
 }
 
 public protocol MainProtocolIterator: IteratorProtocol {
-    public func next()
+
+    /*
+      next : MainProtocolIterator -> MainProtocol x CarteProtocol?
+    */
+    public func next() -> CarteProtocol? 
 }

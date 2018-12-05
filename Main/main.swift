@@ -86,6 +86,10 @@ func input(_ msg: String = "Selectionnez votre reponse", _ rep_possibles: [Strin
     return reponse;
 }
 
+
+/*
+    Renvoie les donnees de la carte passee en parametre sous la forme d'une chaine de caracteres
+*/
 func str_carte_stats(_ c: CarteProtocol) -> String {
     var str: String = "";
     str += c.type_carte();
@@ -100,12 +104,61 @@ func str_carte_stats(_ c: CarteProtocol) -> String {
 
     str += "\n PV restants : " + c.pv_restants()
 
-
     return str;
 }
 
-func str_plateau(_ p: PlateauProtocol) {
+/*
+    Renvoie les donnes de la carte passee en parametre de facon reduite sous la forme d'une chaine de caracteres
+    Forme : Type (Attaque, statut, PV_restants)
+*/
+func str_carte_red(_ c: CarteProtocol) -> String {
+    var str: String = "";
+    str += c.type_carte()
+    str += " (" + c.puissance_attaque()
+    if (c.statut() == 1) {
+        str += ", Off"
+    } else {
+        str += ", Def"
+    }
+    str += ", " + c.pv_restants() + ")"
+    return str;
+}
 
+
+/*
+    Assigne les differentes cartes des plateaux passees en parametre dans un tableau.
+    La ligne 0 est l'arriere du plateau du j1
+    La ligne 1 est le front du plateau du j1
+    La ligne 2 est le front du plateau du j2
+    La ligne 3 est l'arriere du plateau du j2
+
+    Les deux plateau etant face a face, on aura donc la case (0,0) du J1 qui fera face a la case (0, 0) du j1, fera face
+    a la case (2,0) du J2
+
+    Le tableau[4][3] de Carte resultant sera sous cette forme, ou (x,y) represente la carte aux coordonnees x,y
+    3   (2,1)   (1,1)   (0,1)   |   Arriere J2
+    2   (2,0)   (1,0)   (0,0)   |   Front J2
+    1   (0,0)   (1,0)   (2,0)   |   Front J1
+    0   (0,1)   (1,1)   (2,1)   |   Arriere J1
+          0       1       2
+*/
+func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) -> [CarteProtocol] {
+    var tab: [[Int]] = [];  //TODO
+    for i in 0
+}
+
+/*
+    Renvoie les donnees du champ de bataille sur la forme de chaine de caracteres selon le point de vue du joueur actif
+    Ses troupes seront affichees en bas, les troupes enemies en haut
+    Parameters :
+        - p_joueur_actif    Le plateau du joueur actif
+        - p_joueur_inactif  Le plateau du joueur inactif
+*/
+func str_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) {
+    var str: String = ""
+    let empty: String = "VIDE"
+    // TODO
+    var c: CarteProtocol = p_joueur_inactif.carte_en_position(2, 1)
 }
 
 func str_champ_bataille(_ p1: PlateauProtocol, _ p2: PlateauProtocol)

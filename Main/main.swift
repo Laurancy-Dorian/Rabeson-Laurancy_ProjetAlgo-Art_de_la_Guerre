@@ -93,16 +93,16 @@ func input(_ msg: String = "Selectionnez votre reponse", _ rep_possibles: [Strin
 func str_carte_stats(_ c: CarteProtocol) -> String {
     var str: String = "";
     str += c.type_carte();
-    str += "\n Attaque : " + c.puissance_attaque()
+    str += "\t Attaque : " + c.puissance_attaque()
     if (c.statut() == 1) {
-        str += "\n Statut : Offensif"
+        str += "\t Statut : Offensif"
     } else {
-        str += "\n Statut : Defensif"
+        str += "\t Statut : Defensif"
     }
-    str += "\n PV en statut Defensif : " + c.pv_defensif()
-    str += "\n PV en statut Offensif : " + c.pv_offensif()
+    str += "\t PV en statut Defensif : " + c.pv_defensif()
+    str += "\t PV en statut Offensif : " + c.pv_offensif()
 
-    str += "\n PV restants : " + c.pv_restants()
+    str += "\t PV restants : " + c.pv_restants()
 
     return str;
 }
@@ -141,10 +141,45 @@ func str_carte_red(_ c: CarteProtocol) -> String {
     1   (0,0)   (1,0)   (2,0)   |   Front J1
     0   (0,1)   (1,1)   (2,1)   |   Arriere J1
           0       1       2
+
+          ==> par exemple : tab[2][1] renvoie la carte en position (1,0) du plateau du J2
 */
 func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) -> [CarteProtocol] {
-    var tab: [[Int]] = [];  //TODO
-    for i in 0
+    var tab = [[CartePotocol]]();
+    var ligne1 = [CartePotocol]();
+    ligne1.insert(p_joueur_actif.carte_en_position(0, 1), at: 0)
+    ligne1.insert(p_joueur_actif.carte_en_position(1, 1), at: 1)
+    ligne1.insert(p_joueur_actif.carte_en_position(2, 1), at: 2)
+
+    ligne2 = [CartePotocol]();
+    ligne2.insert(p_joueur_actif.carte_en_position(0, 0), at: 0)
+    ligne2.insert(p_joueur_actif.carte_en_position(1, 0), at: 1)
+    ligne2.insert(p_joueur_actif.carte_en_position(2, 0), at: 2)
+
+    ligne3 = [CartePotocol]();
+    ligne3.insert(p_joueur_inactif.carte_en_position(2, 0), at: 0)
+    ligne3.insert(p_joueur_inactif.carte_en_position(1, 0), at: 1)
+    ligne3.insert(p_joueur_inactif.carte_en_position(0, 0), at: 2)
+
+    ligne4 = [CartePotocol]();
+    ligne4.insert(p_joueur_inactif.carte_en_position(2, 1), at: 0)
+    ligne4.insert(p_joueur_inactif.carte_en_position(1, 1), at: 1)
+    ligne4.insert(p_joueur_inactif.carte_en_position(0, 1), at: 2)
+
+    tab.insert(ligne1, at: 0)
+    tab.insert(ligne1, at: 1)
+    tab.insert(ligne1, at: 2)
+    tab.insert(ligne1, at: 3)
+
+    return tab
+
+}
+
+func str_plateau(_ plateau: PlateauProtocol) {
+    var str: String = ""
+
+
+
 }
 
 /*
@@ -157,11 +192,32 @@ func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif:
 func str_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) {
     var str: String = ""
     let empty: String = "VIDE"
-    // TODO
-    var c: CarteProtocol = p_joueur_inactif.carte_en_position(2, 1)
+
+    var tab = align_champ_bataille(p_joueur_actif, p_joueur_inactif)
+
+    for ligne in tab.reverse() {
+        for carte in ligne {
+            str += str_carte_red(carte)
+            str += "\t"
+        }
+        str += "\n"
+    }
+
+    return str;
 }
 
-func str_champ_bataille(_ p1: PlateauProtocol, _ p2: PlateauProtocol)
+/*
+    Renvoie les stats de toutes les cartes presentes dans la main du joueur
+    Parameters :
+        - main  La main a afficher
+*/
+func str_main(_ main: MainProtocol) {
+    var str: String = ""
+    for c in main {
+        str += str_carte_stats(c) + "\n"
+    }
+    return str
+}
 
 
 // ===== MAIN ===== //

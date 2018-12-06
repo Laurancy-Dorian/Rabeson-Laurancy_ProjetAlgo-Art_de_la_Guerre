@@ -31,28 +31,28 @@ public protocol CarteProtocol {
     // Param : pv_defensif >= pv_offensif
     // Param : portee est un tableau de tuples qui representent chacun une direction possible de l'attaque de la carte
     //			les deux elements des tuples ne peuvent pas etre nuls
-    public init(_ type_carte: String, _ puissance_attaque: Int, _ pv_defensif: Int,_ pv_offensif: Int,_ portee: [(Int, Int)]) throws
+    init(_ type_carte: String, _ puissance_attaque: Int, _ pv_defensif: Int,_ pv_offensif: Int,_ portee: [(Int, Int)]) throws
 
     // puissance_attaque : CarteProtocol -> CarteProtocol x Int
     // Post : retourne la puissance d'attaque de la carte
-    public func puissance_attaque() -> Int
+    func puissance_attaque() -> Int
 
     // pv_defensif : CarteProtocol -> CarteProtocol x Int
     // Post : retourne les pv de la carte lorsqu'elle est en statut defensif
-    public func pv_defensif() -> Int
+    func pv_defensif() -> Int
 
     // pv_offensif : CarteProtocol -> CarteProtocol x Int
     // Post : retourne les pv de la carte lorsqu'elle est en statut offensif
-    public func pv_offensif() -> Int
+    func pv_offensif() -> Int
 
     // pv_restant : CarteProtocol -> CarteProtocol x Int
     // fonction get pv qui renvoie les pv en fonction du statut actuel de la carte
     // Post : La difference entre les pv en fonction du statut actuel de la carte et les degats subits durant ce tour
-    public func pv_restants() -> Int
+    func pv_restants() -> Int
 
     // statut : CarteProtocol -> CarteProtocol x Int
     // Post : retourne le statut actuel de la carte
-    public func statut() -> Int
+    func statut() -> Int
 
     // statut : CarteProtocol x Int -> CarteProtocol
     // Modifie le statut de la carte.
@@ -62,26 +62,26 @@ public protocol CarteProtocol {
     // Pre : Statut ne peut unique prendre comme valeur 0 ou 1
     // Post : Modifie le statut en fonction de la valeur en parametre (carte en offensif si 1, carte en defensif si 0)
     // 				Ne fait rien et genere une erreur si les precondition n'ont pas ete respectees
-    public mutating func statut(_ statut: Int) throws
+    mutating func statut(_ statut: Int) throws
 
     // portee : CarteProtocol x Int -> CarteProtocol x [(Int, Int)]
     // Renvoie la portee de la carte
     // Post : Retourne un tableau de tuples contenant les portees relatives a la carte
-    public func portee() -> [(Int, Int)]
+    func portee() -> [(Int, Int)]
 
     // type_carte : CarteProtocol -> CarteProtocol x String
     // Post : Retourne le type de la carte sous forme de String
-    public func type_carte() -> String
+    func type_carte() -> String
 
     // degats_subis : CarteProtocol -> CarteProtocol x Int
     // Post : Renvoie les degats subis par la carte
-    public func degats_subis() -> Int
+    func degats_subis() -> Int
 
     // degats_subis : CarteProtocol x Int -> CarteProtocol
     // Param : degats represente les degats totaux subis par la carte
     // Pre : degats ne peut pas etre negative
     // Post : remplace les degats subis par la valeur passee en parametre si les pre sont verifiees
-    public mutating func degats_subis(_ degats: Int)
+    mutating func degats_subis(_ degats: Int)
 
     // attaque : CarteProtocol x CarteProtocol -> CarteProtocol x Int
     // Carte courante (attaquante) attaque carte attaquee
@@ -102,6 +102,6 @@ public protocol CarteProtocol {
     //			Entier nul : la carte attaquee est capturee
     //			Entier positif : les degats subits par la carte attaquee si elle n'a pas ete tuee ou capturee
     // Post : la carte attaquante doit etre en statut offensif
-    public func attaque(_ carte_attaquee: CarteProtocol) throws -> Int
+    func attaque(_ carte_attaquee: CarteProtocol) throws -> Int
 
 }

@@ -14,7 +14,7 @@ public protocol RoyaumeProtocol: Sequence {
       init : -> RoyaumeProtocol
       Creee un Royaume vide
     */
-    public init()
+    init()
 
     /*
       ajouter_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol
@@ -22,7 +22,7 @@ public protocol RoyaumeProtocol: Sequence {
       Pre : la carte a ajouter ne doit pas etre deja dans le Royaume
       Post : ajoute la carte au Royaume
     */
-    public mutating func ajouter_royaume(_ carte: CarteProtocol)
+    mutating func ajouter_royaume(_ carte: CarteProtocol)
 
     /*
       retirer_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol x CarteProtocol
@@ -30,7 +30,7 @@ public protocol RoyaumeProtocol: Sequence {
       Pre : le Royaume n'est pas vide, sinon renvoie une erreur
       Post : retire la carte du Royaume
     */
-    public mutating func retirer_royaume() throws -> CarteProtocol // TODO On renvoie ?
+    mutating func retirer_royaume() throws -> CarteProtocol // TODO On renvoie ?
 
     /*
       est_vide : RoyaumeProtocol -> RoyaumeProtocol x Bool
@@ -38,7 +38,7 @@ public protocol RoyaumeProtocol: Sequence {
       Pre :
       Post : retourne true si le Royaume est vide, false sinon
     */
-    public func est_vide() -> Bool
+    func est_vide() -> Bool
 
     /*
       count_royaume : RoyaumeProtocol -> RoyaumeProtocol x Int
@@ -46,13 +46,13 @@ public protocol RoyaumeProtocol: Sequence {
       Pre :
       Post : retourne le nombre de cartes dans le Royaume
     */
-    public func count_royaume() -> Int
+    func count_royaume() -> Int
 
     /*
       makeIterator : RoyaumeProtocol -> RoyaumeProtocol x RoyaumeProtocolIterator
       cree un iterateur sur la collection de cartes en FIFO (premiere carte ajoutee, premiere carte sortie)
     */
-    public func makeIterator() -> RoyaumeProtocolIterator 
+    func makeIterator() -> RoyaumeProtocolIterator 
 }
 
 
@@ -62,12 +62,12 @@ public protocol RoyaumeProtocol: Sequence {
 
   On itere dans le Royaume de la plus ancienne a la plus recente.
 */
-public protocol RoyaumeProtocolIterator: IteratorProtocol {
+protocol RoyaumeProtocolIterator: IteratorProtocol {
   /*
     next : RoyaumeProtocolIterator -> RoyaumeProtocolIterator x CarteProtocol?
     renvoie la prochaine carte dans la collection du Royaume
     Pre :
     Post : retourne la carte suivante dans la collection du Royaume, ou nil si on a atteint le fin de la collection
   */
-  public func next() -> CarteProtocol? 
+  func next() -> CarteProtocol? 
 }

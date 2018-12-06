@@ -11,7 +11,7 @@ public protocol MainProtocol: Sequence {
       init : -> MainProtocol
       Creee une Main vide
     */
-    public init()
+    init()
 
     /*
       ajouter_main : MainProtocol x CarteProtocol -> MainProtocol
@@ -19,43 +19,43 @@ public protocol MainProtocol: Sequence {
       Pre :
       Post : la carte est ajoutee a La Main
     */
-    public mutating func ajouter_main(_ carte: CarteProtocol)
+    mutating func ajouter_main(_ carte: CarteProtocol)
 
     /*
       retirer_main : MainProtocol x CarteProtocl -> MainProtocol x CarteProtocol
       retire la carte de la main : la carte a retirer ne sera plus dans la Main
       Param : la carte a retirer
-      Pre :
+      Pre : La main ne doit pas etre vide
       Post : renvoie la carte retiree si elle est retiree
     */
-    public mutating func retirer_main(_ carte: CarteProtocol) throws -> CarteProtocol // TODO verif si on renvoie vraiment vu qu'on la passe en parametre
+    mutating func retirer_main(_ carte: CarteProtocol) throws -> CarteProtocol // TODO verif si on renvoie vraiment vu qu'on la passe en parametre
 
     /*
       count_main : MainProtocol -> MainProtocol x Int
       Pre :
       Post : retourne le nombre de carte dans la main
     */
-    public func count_main() -> Int
+    func count_main() -> Int
 
     /*
       est_vide : MainProtocol -> MainProtocol x Bool
       Pre :
       Post : retourne vrai si la main est vide
     */
-    public func est_vide() -> Bool
+    func est_vide() -> Bool
 
     /*
       makeIterator : MainProtocol -> MainProtocol x MainProtocolIterator
       cree un iterateur sur la collection de cartes de la Main
     */
-    public func makeIterator() -> MainProtocolIterator
+    func makeIterator() -> MainProtocolIterator
 }
 
 /*
   MainProtocolIterator est un iterateur de MainProtocol qui aide au parcours de la collection
   de MainProtocol.
 */
-public protocol MainProtocolIterator: IteratorProtocol {
+protocol MainProtocolIterator: IteratorProtocol {
 
     /*
       next : MainProtocolIterator -> MainProtocol x CarteProtocol?
@@ -63,5 +63,5 @@ public protocol MainProtocolIterator: IteratorProtocol {
       Pre :
       Post : retourne la carte suivante dans la collection de la Main, ou nil si on a atteint le fin de la collection
     */
-    public func next() -> CarteProtocol? 
+    func next() -> CarteProtocol? 
 }

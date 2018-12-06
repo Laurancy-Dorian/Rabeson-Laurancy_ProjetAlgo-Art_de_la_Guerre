@@ -60,8 +60,9 @@ public protocol CarteProtocol {
     // La carte est en statut OFFENSIF si son statut est a 1.
     // Param : statut represente le nouveau statut de la carte
     // Pre : Statut ne peut unique prendre comme valeur 0 ou 1
-    // Post : Modifie le statut en fonction de la valeur en parametre (carte en offensif si 1, carte en defensif si 0)
-    // 				Ne fait rien et genere une erreur si les precondition n'ont pas ete respectees
+    // Post : Modifie le statut en fonction de la valeur en parametre (carte en 
+    //      offensif si 1, carte en defensif si 0)
+    // 	Ne fait rien et genere une erreur si les precondition n'ont pas ete respectees
     mutating func statut(_ statut: Int) throws
 
     // portee : CarteProtocol x Int -> CarteProtocol x [(Int, Int)]

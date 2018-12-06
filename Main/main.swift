@@ -489,12 +489,49 @@ func deployer_carte(_ main: Main, _ plateau: Plateau) {
     }
 }
 
+func choisir_carte_plateau(_ plateau: Plateau) -> Carte? {
+    var ok = false
+    while !ok && !plateau.plateau_vide() {
+        // Affiche le plateau
+        print(str_plateau(plateau))
+
+        // Cree un tableau des reponses admissibles
+        var posX = Int(input("Choisir la position x (verticale) ou assigner cette carte", ["0", "1", "2"]))
+        var posY = Int(input("Choisir la position y (horizontale) ou assigner cette carte", ["0", "1"]))
+
+        // Ajoute la carte au plateau
+        if (plateau.est_occupe(posX, posY)) {
+            if let c = plateau.carte_en_position(posX, posY) {
+                return c
+            }
+            ok = true
+        } else {
+            ok = input("Cette position est vide, voulez vous recommencer ?") == "N"
+        }
+    }
+    return nil;
+}
+
 /*
     Phase d'attaque
 */
-func phase_attaque(_ plateau_att: Plateau, _ plateau_def: Plateau, _ royaume_att: Royaume, _ main_def: Main) -> Int {
+    func phase_attaque(_ plateau_att: Plateau, _ plateau_def: Plateau, _ royaume_att: Royaume, _ main_def: Main) -> Int {
+        print("=== PHASE D'ATTAQUE ===")
 
-}
+        var continuer = true
+
+        // -- Tant qu’il reste des cartes qui peuvent attaquer
+        //		ET que le joueur veut continuer d’attaquer    -- //
+        while (continuer && plateau_att.count_cartes_qui_peuvent_attaquer()) {
+            // Affiche le champ de bataille
+            print(str_champ_bataille(plateau_j1, plateau_j2))
+
+            print("Choisir la carte attaquante")
+
+
+        }
+
+    }
 
 // -- Fonctions d'initialisations -- //
 
@@ -502,153 +539,153 @@ func phase_attaque(_ plateau_att: Plateau, _ plateau_def: Plateau, _ royaume_att
     Initialise une pioches en y ajoutant 9 Cartes de type "soldat", 6 de type "garde" et 5 de type "archer"
     retourne la pioche creee
 */
-func init_pioche() -> Pioche {
-    var pioche = new Pioche()
+    func init_pioche() -> Pioche {
+        var pioche = new Pioche()
 
-    let portee_soldat = [(0, 1)]
-    let portee_archers = [(1, 2), (-1, 2), (2, 1), (-2, 1)]
+        let portee_soldat = [(0, 1)]
+        let portee_archers = [(1, 2), (-1, 2), (2, 1), (-2, 1)]
 
-    // Cree les 9 soldats
-    for i in (0...8) {
-        do {
-            try var c = Carte("Soldat", 1, 2, 1, portee_soldat)
-        } catch {
-            fatalError("Erreur creation cartes soldats")
+        // Cree les 9 soldats
+        for i in (0...8) {
+            do {
+                try var c = Carte("Soldat", 1, 2, 1, portee_soldat)
+            } catch {
+                fatalError("Erreur creation cartes soldats")
+            }
+            pioche.ajouter_pioche(c)
         }
-        pioche.ajouter_pioche(c)
-    }
 
-    // Cree les 6 gardes
-    for i in (0...5) {
-        do {
-            try var c = Carte("Garde", 1, 3, 2, portee_soldat)
-        } catch {
-            fatalError("Erreur creation cartes soldats")
+        // Cree les 6 gardes
+        for i in (0...5) {
+            do {
+                try var c = Carte("Garde", 1, 3, 2, portee_soldat)
+            } catch {
+                fatalError("Erreur creation cartes soldats")
+            }
+            pioche.ajouter_pioche(c)
         }
-        pioche.ajouter_pioche(c)
-    }
 
-    // Cree les 5 archers
-    for i in (0...4) {
-        do {
-            try var c = Carte("Archer", 1, 2, 1, portee_archers)
-        } catch {
-            fatalError("Erreur creation cartes soldats")
+        // Cree les 5 archers
+        for i in (0...4) {
+            do {
+                try var c = Carte("Archer", 1, 2, 1, portee_archers)
+            } catch {
+                fatalError("Erreur creation cartes soldats")
+            }
+            pioche.ajouter_pioche(c)
         }
-        pioche.ajouter_pioche(c)
-    }
 
-    return pioche
-}
+        return pioche
+    }
 
 
 // ===== MAIN ===== //
 
 // Affichage de debut de partie
-print("==== ART OF WAR ====")
+    print("==== ART OF WAR ====")
 
 
 // === INITIALISATION DE LA PARTIE === //
 
 // Instanciation des Mains
-var main_j1: Main = Main()
-var main_j2 = Main()
+    var main_j1: Main = Main()
+    var main_j2 = Main()
 
 // Instanciation des Royaumes
-var royaume_j1 = Royaume()
-var royaume_j2 = Royaume()
+    var royaume_j1 = Royaume()
+    var royaume_j2 = Royaume()
 
 // Instanciation des Plateaux
-var plateau_j1 = Plateau()
-var plateau_j2 = Plateau()
+    var plateau_j1 = Plateau()
+    var plateau_j2 = Plateau()
 
 
 // -- Remplis les pioches des 2 joueurs de 9 soldats, 6 gardes et 5 archers -- //
 
 // Instanciation des Pioches
-var pioche_j1 = init_pioche()
-var pioche_j2 = init_pioche()
+    var pioche_j1 = init_pioche()
+    var pioche_j2 = init_pioche()
 
 
 // --  Met dans les mains des 2 joueurs 1 roi (random) et les 3 premières cartes de la pioche (= piocher 3x) -- //
 
 // Instanciation des Rois
-do {
-    try var roi1 = Carte("Roi", 1, 4, 4, [(0, 1), (0, 2), (-1, 1), (1, 1)])
-    try var roi2 = Carte("Roi", 1, 5, 4, [(0, 1), (-1, 1), (1, 1)])
-} catch {
-    fatalError("Erreur creation cartes soldats")
-}
+    do {
+        try var roi1 = Carte("Roi", 1, 4, 4, [(0, 1), (0, 2), (-1, 1), (1, 1)])
+        try var roi2 = Carte("Roi", 1, 5, 4, [(0, 1), (-1, 1), (1, 1)])
+    } catch {
+        fatalError("Erreur creation cartes soldats")
+    }
 
 // Ajout des Rois dans les Mains
-main_j1.ajouter_main(roi1)
-main_j2.ajouter_main(roi2)
+    main_j1.ajouter_main(roi1)
+    main_j2.ajouter_main(roi2)
 
 // Piocher + Ajout main
-for i in (1...3) {
-    if let c = pioche_j1.piocher() {
-        main_j1.ajouter_main(c)
+    for i in (1...3) {
+        if let c = pioche_j1.piocher() {
+            main_j1.ajouter_main(c)
+        }
     }
-}
-for i in (1...3) {
-    if let c = pioche_j2.piocher() {
-        main_j2.ajouter_main(c)
+    for i in (1...3) {
+        if let c = pioche_j2.piocher() {
+            main_j2.ajouter_main(c)
+        }
     }
-}
 
 // -- Piocher une carte dans la pioche et la placer dans le Royaume (pour les 2 joueurs) -- //
-if let c = pioche_j1.piocher() {
-    royaume_j1.ajouter_royaume(c)
-}
-if let c = pioche_j2.piocher() {
-    royaume_j2.ajouter_royaume(c)
-}
+    if let c = pioche_j1.piocher() {
+        royaume_j1.ajouter_royaume(c)
+    }
+    if let c = pioche_j2.piocher() {
+        royaume_j2.ajouter_royaume(c)
+    }
 
 // -- Choisir n’importe quelle carte de sa main et la placer sur le Front -- //
 
 // Demande au J1 de choisir une carte de sa main
-print("Joueur 1")
-deployer_carte(main_j1, plateau_j1)
+    print("Joueur 1")
+    deployer_carte(main_j1, plateau_j1)
 
 // Demande au J2 de choisir une carte de sa main
-print("Joueur 2")
-deployer_carte(main_j2, plateau_j2)
+    print("Joueur 2")
+    deployer_carte(main_j2, plateau_j2)
 
 
 // === JEU === //
 
 // -- Initialise un int qui defini la fin de la partie (si > 0, la partie est terminee, et la condition de faim de
 // partie est determinee en fonction de sa valeur -- //
-var partieTerminee: Int = 0
+    var partieTerminee: Int = 0
 
 // Joueur courant = 1
-var j_courant: Int = 1
+    var j_courant: Int = 1
 
 // Boucle principale des tours
-while (partieTerminee == 0) {
+    while (partieTerminee == 0) {
 
-    // Tour du J1
-    if j_courant == 1 {
-        // Affiche le champ de bataille
-        print(str_champ_bataille(plateau_j1, plateau_j2))
+        // Tour du J1
+        if j_courant == 1 {
+            // Affiche le champ de bataille
+            print(str_champ_bataille(plateau_j1, plateau_j2))
 
-        partieTerminee = tour_de_jeu(main_j1, pioche_j1, plateau_j1, royaume_j1, plateau_j2, main_j2)
+            partieTerminee = tour_de_jeu(main_j1, pioche_j1, plateau_j1, royaume_j1, plateau_j2, main_j2)
 
-        // Si la partie n'est pas terminee, le joueur courant devient le J2
-        if (partieTerminee == 0) {
-            j_courant = 2
-        }
+            // Si la partie n'est pas terminee, le joueur courant devient le J2
+            if (partieTerminee == 0) {
+                j_courant = 2
+            }
 
-        // Tour du J2
-    } else {
-        partieTerminee = tour_de_jeu(main_j2, pioche_j2, plateau_j2, royaume_j2, plateau_j1, main_j1)
+            // Tour du J2
+        } else {
+            partieTerminee = tour_de_jeu(main_j2, pioche_j2, plateau_j2, royaume_j2, plateau_j1, main_j1)
 
-        // Si la partie n'est pas terminee, le joueur courant devient le J1
-        if (partieTerminee == 0) {
-            j_courant = 1
+            // Si la partie n'est pas terminee, le joueur courant devient le J1
+            if (partieTerminee == 0) {
+                j_courant = 1
+            }
         }
     }
-}
 
 
 // === FIN DE PARTIE === //
@@ -656,25 +693,25 @@ while (partieTerminee == 0) {
 // Affichage du message de fin de partie
 
 // Effondrement
-if (partieTerminee == 1) {
-    if (j_courant == 1) {
-        print("Effondrement du joueur 2 : Victoire du joueur 1")
-    } else {
-        print("Effondrement du joueur 1 : Victoire du joueur 2")
-    }
+    if (partieTerminee == 1) {
+        if (j_courant == 1) {
+            print("Effondrement du joueur 2 : Victoire du joueur 1")
+        } else {
+            print("Effondrement du joueur 1 : Victoire du joueur 2")
+        }
 
 // Execution
-} else if (partieTerminee == 2) {
-    if (j_courant == 1) {
-        print("Le roi du joueur 2 est mort : Victoire du joueur 1")
-    } else {
-        print("Le roi du joueur 1 est mort : Victoire du joueur 2")
-    }
+    } else if (partieTerminee == 2) {
+        if (j_courant == 1) {
+            print("Le roi du joueur 2 est mort : Victoire du joueur 1")
+        } else {
+            print("Le roi du joueur 1 est mort : Victoire du joueur 2")
+        }
 
 // Fin de la guerre
-} else {
-    print("Fin de la guerre : Egalite")
-}
+    } else {
+        print("Fin de la guerre : Egalite")
+    }
 
 // Affichage du game over
-print("==== GAME OVER ====")
+    print("==== GAME OVER ====")

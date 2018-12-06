@@ -9,7 +9,7 @@
 */
 
 public protocol RoyaumeProtocol: Sequence {
-
+  associatedtype RoyaumeProtocolIterator : IteratorProtocol
     /*
       init : -> RoyaumeProtocol
       Creee un Royaume vide

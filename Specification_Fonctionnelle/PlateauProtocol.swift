@@ -33,6 +33,7 @@
     - savoir quelles sont les cartes qui peuvent encore attaquer lors d'un tour
 */
 public protocol PlateauProtocol: Sequence {
+  associatedtype PlateauProtocolIterator : IteratorProtocol
     /*
       init : -> PlateauProtocol
       Creee un plateau vide

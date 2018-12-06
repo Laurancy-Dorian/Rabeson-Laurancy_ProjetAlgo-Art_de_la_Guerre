@@ -1,5 +1,3 @@
-import protocol CarteProtocol
-
 /* MainProtocol (ou La Main) represente la collection qui contiendra des CarteProtocol (Cartes)
   Une MainProtocol possede les caracteristiques suivantes :
     On doit pouvoir ajouter des cartes a La Main
@@ -8,7 +6,7 @@ import protocol CarteProtocol
 */
 
 public protocol MainProtocol: Sequence {
-
+    associatedtype MainProtocolIterator : IteratorProtocol
     /*
       init : -> MainProtocol
       Creee une Main vide

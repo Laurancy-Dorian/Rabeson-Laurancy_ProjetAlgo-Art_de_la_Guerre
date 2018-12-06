@@ -25,7 +25,7 @@ func lire_input() -> String? {
   input : String x [String] -> String
 
   Demande a l'utilisateur de saisir une expression dans le terminal
-  Affiche un message et attend une reponse specifiqie. Continue a demandee tant qu'une reponse
+  Affiche un message et attend une reponse specifique. Continue a demander tant qu'une reponse
   satisfaisante n'a pas ete saisie
   Parameters :
     - msg   Le message a afficher a l'utilsateur (Une question, une demande de saisie)
@@ -73,7 +73,7 @@ func input(_ msg: String = "Selectionnez votre reponse", _ rep_possibles: [Strin
                 rep_correcte = true
             }
 
-            // Si la reponse n'est pas correcte, on affiche un message et on reinitialise la
+            // Si la reponse n'est pas correcte, on affiche un message et on reinitialise reponse
             if (!rep_correcte) {
                 print("Erreur dans votre reponse")
                 print("Veuillez taper l'une des reponses attendues : " + choix_reponse)
@@ -114,7 +114,7 @@ func str_carte_stats(_ c: Carte) -> String {
 }
 
 /*
-    Renvoie les donnes de la carte passee en parametre de facon reduite sous la forme d'une chaine de caracteres
+    Renvoie les donnees de la carte passee en parametre de facon reduite sous la forme d'une chaine de caracteres
     Forme : Type (Attaque, statut, PV_restants)
     Parameters :
         - c     La carte a afficher
@@ -133,7 +133,7 @@ func str_carte_red(_ c: Carte) -> String {
 }
 
 /*
-    Renvoie les donnees du plateau sous forme de chaine de caractere
+    Renvoie les donnees du plateau sous forme de chaine de caracteres
     Parameters :
         - plateau   Le plateau a afficher
 */
@@ -154,8 +154,8 @@ func str_plateau(_ plateau: Plateau) -> String {
 }
 
 /*
-    Renvoie les donnees du champ de bataille sur la forme de chaine de caracteres selon le point de vue du joueur actif
-    Ses troupes seront affichees en bas, les troupes enemies en haut
+    Renvoie les donnees du champ de bataille sous la forme de chaine de caracteres selon le point de vue du joueur actif
+    Ses troupes seront affichees en bas, les troupes ennemies en haut
     Parameters :
         - p_joueur_actif    Le plateau du joueur actif
         - p_joueur_inactif  Le plateau du joueur inactif
@@ -182,7 +182,7 @@ func str_champ_bataille(_ p_joueur_actif: Plateau, _ p_joueur_inactif: Plateau) 
 }
 
 /*
-    Renvoie les stats de toutes les cartes presentes dans la main du joueur sous la forme de chaine de caractere
+    Renvoie les stats de toutes les cartes presentes dans la main du joueur sous la forme de chaine de caracteres
     Parameters :
         - main  La main a afficher
 */
@@ -195,7 +195,7 @@ func str_main(_ main: Main) -> String {
 }
 
 /*
-    Renvoie les donnees du royaume sous la forme de chaine de caractere
+    Renvoie les donnees du royaume sous la forme de chaine de caracteres
     Parameters :
         - roy   Le Royaume a afficher
 */
@@ -265,7 +265,7 @@ func tour_de_jeu(_ main: Main, _ pioche: Pioche, _ plateau: Plateau, _ royaume: 
     // -- Choisir entre “Rien”, “Deployer”, “Attaquer” -- //
     var action = Int(input("Que voulez vous faire ? \n - 1 : Rien\n - 2 : Deployer\n - 3 : Attaquer\n", ["1", "2", "3"]))
 
-    // -- Traitement de l'action "deployer" -- //
+    // -- Traitement de l'action "Deployer" -- //
     if (action == 2) {
         deployer_carte(main, plateau)
     }
@@ -295,13 +295,14 @@ func tour_de_jeu(_ main: Main, _ pioche: Pioche, _ plateau: Plateau, _ royaume: 
 
 
 /*
-    Assigne les differentes cartes des plateaux passees en parametre dans un tableau.
+    Assigne les differentes cartes des plateaux passes en parametre dans un tableau.
     La ligne 0 est l'arriere du plateau du j1
     La ligne 1 est le front du plateau du j1
     La ligne 2 est le front du plateau du j2
     La ligne 3 est l'arriere du plateau du j2
 
-    Les deux plateau etant face a face, on aura donc la case (0,0) du J1 qui fera face a la case (0, 0) du j1, fera face
+    Les deux plateau etant face a face, on aura donc la case (0,0) 
+    du J1 qui fera face a la case (0, 0) du J2, fera face
     a la case (2,0) du J2
 
     S'il n'y a pas de cartes a une position, la case du tableau contiendra nil
@@ -421,7 +422,7 @@ func tab_main(_ main: Main) -> [Main] {
 
 
 /*
-    Demande au joueur de chosir une carte dans sa main et retourne la carte choisie
+    Demande au joueur de choisir une carte dans sa main et retourne la carte choisie
 */
 func choisir_main(_ main: Main) -> Carte {
     // Affichage de la main du J1
@@ -499,7 +500,7 @@ func phase_attaque(_ plateau_att: Plateau, _ plateau_def: Plateau, _ royaume_att
 // -- Fonctions d'initialisations -- //
 
 /*
-    Initialise une pioches en y ajoutant 9 Cartes de type "soldat", 6 de type "garde" et 5 de type "archer"
+    Initialise une pioche en y ajoutant 9 Cartes de type "soldat", 6 de type "garde" et 5 de type "archer"
     retourne la pioche creee
 */
 func init_pioche() -> Pioche {
@@ -563,7 +564,7 @@ var plateau_j1 = Plateau()
 var plateau_j2 = Plateau()
 
 
-// -- Remplis les pioches des 2 joueurs de 9 soldats, 6 gardes et 5 archers -- //
+// -- Remplit les pioches des 2 joueurs de 9 soldats, 6 gardes et 5 archers -- //
 
 // Instanciation des Pioches
 var pioche_j1 = init_pioche()
@@ -617,7 +618,8 @@ deployer_carte(main_j2, plateau_j2)
 
 // === JEU === //
 
-// -- Initialise un int qui defini la fin de la partie (si > 0, la partie est terminee, et la condition de faim de
+// -- Initialise un int qui definit la fin de la partie 
+// (si > 0, la partie est terminee, et la condition de fin de
 // partie est determinee en fonction de sa valeur -- //
 var partieTerminee: Int = 0
 

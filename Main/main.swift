@@ -89,8 +89,6 @@ func input(_ msg: String = "Selectionnez votre reponse", _ rep_possibles: [Strin
 }
 
 
-
-
 // -- Fonctions d'affichage -- //
 
 /*
@@ -214,7 +212,6 @@ func str_royaume(_ roy: Royaume) -> String {
 // -- Fonctions de calculs -- //
 
 
-
 /*
     Effectue un tour de jeu :
         - Remet les cartes du plateau par defaut
@@ -236,7 +233,7 @@ func str_royaume(_ roy: Royaume) -> String {
         - 2     Si le ROI du joueur passif est mort
         - 3     Si la pioche est vide au moment de piocher
 */
-func tour_de_jeu(main: Main, pioche: Pioche, plateau: Plateau, royaume: Royaume, plateau_ennemi: Plateau, main_ennemi : Main) -> Int {
+func tour_de_jeu(_ main: Main, _ pioche: Pioche, _ plateau: Plateau, _ royaume: Royaume, _ plateau_ennemi: Plateau, _ main_ennemi: Main) -> Int {
     // ==== PHASE DE PREPARATION ==== //
 
     // -- Passez les cartes sur le champ de bataille du joueurs actif en position défensive -- //
@@ -249,7 +246,7 @@ func tour_de_jeu(main: Main, pioche: Pioche, plateau: Plateau, royaume: Royaume,
     // -- Pioche s'il reste des cartes et ajoute a la main -- //
     if (pioche.count_pioche() > 0) {
         if var c = pioche.piocher() {
-            main.ajouter_main (c)
+            main.ajouter_main(c)
         }
     }
     // -- FIN DE LA GUERRE Si la pioche est vide -- //
@@ -261,12 +258,12 @@ func tour_de_jeu(main: Main, pioche: Pioche, plateau: Plateau, royaume: Royaume,
     // === PHASE D'ACTION ===
 
     // Affiche les donnees du joueur
-    print (str_plateau(plateau))
-    print (str_main(main))
-    print (str_royaume(royaume))
+    print(str_plateau(plateau))
+    print(str_main(main))
+    print(str_royaume(royaume))
 
     // -- Choisir entre “Rien”, “Deployer”, “Attaquer” -- //
-    var action = Int(input ("Que voulez vous faire ? \n - 1 : Rien\n - 2 : Deployer\n - 3 : Attaquer\n", ["1", "2", "3"]))
+    var action = Int(input("Que voulez vous faire ? \n - 1 : Rien\n - 2 : Deployer\n - 3 : Attaquer\n", ["1", "2", "3"]))
 
     // -- Traitement de l'action "deployer" -- //
     if (action == 2) {
@@ -284,18 +281,17 @@ func tour_de_jeu(main: Main, pioche: Pioche, plateau: Plateau, royaume: Royaume,
     // === PHASE DE DEVELOPPEMENT
 
     while (main.count_main() > 6 || input("Attribuer carte de la main au Royaume", ["Y", "N"]) == "Y") && main.count_main > 0 {
-        print (str_royaume(royaume))
+        print(str_royaume(royaume))
 
         var carte = choisir_main(main)
         do {
             try main.retirer_main(carte)
-            royaume.ajouter_royaume (carte)
+            royaume.ajouter_royaume(carte)
         }
     }
 
     return 0
 }
-
 
 
 /*
@@ -427,7 +423,7 @@ func tab_main(_ main: Main) -> [Main] {
 /*
     Demande au joueur de chosir une carte dans sa main et retourne la carte choisie
 */
-func choisir_main (_ main : Main) -> Carte {
+func choisir_main(_ main: Main) -> Carte {
     // Affichage de la main du J1
     print(str_main(main))
 
@@ -448,6 +444,7 @@ func choisir_main (_ main : Main) -> Carte {
 
     return carte_choisie
 }
+
 /*
     Propose au joueur de deployer une unite et de la placer sur son plateau
     Si la position renseignee est deja occupee, propose d'echanger les deux cartes. Si le joueur refuse
@@ -495,7 +492,7 @@ func deployer_carte(_ main: Main, _ plateau: Plateau) {
 /*
     Phase d'attaque
 */
-func phase_attaque(_ plateau_att : Plateau,_ plateau_def : Plateau,_ royaume_att: Royaume,_ main_def : Main) -> Int {
+func phase_attaque(_ plateau_att: Plateau, _ plateau_def: Plateau, _ royaume_att: Royaume, _ main_def: Main) -> Int {
 
 }
 
@@ -633,7 +630,7 @@ while (partieTerminee == 0) {
     // Tour du J1
     if j_courant == 1 {
         // Affiche le champ de bataille
-        print (str_champ_bataille(plateau_j1, plateau_j2))
+        print(str_champ_bataille(plateau_j1, plateau_j2))
 
         partieTerminee = tour_de_jeu(main_j1, pioche_j1, plateau_j1, royaume_j1, plateau_j2, main_j2)
 

@@ -66,6 +66,7 @@ func input(_ msg: String = "Selectionnez votre reponse", _ rep_possibles: [Strin
                 for rep_attendue in rep_possibles {
                     if (reponse.lowercased() == rep_attendue.lowercased()) {
                         rep_correcte = true
+                        reponse = rep_attendue
                     }
                 }
             } else {
@@ -131,7 +132,12 @@ func str_plateau(_ plateau: PlateauProtocol) -> String {
     var str: String = ""
     for i in (0...1) {
         for j in (0...2) {
-            str += str_carte_red(plateau.carte_en_position(i, j)) + "\t"
+            if let c = plateau.carte_en_position(i, j) {
+                str += str_carte_red(c) + "\t"
+            } else {
+                str += "VIDE \t"
+            }
+
         }
         str+= "\n"
     }
@@ -198,6 +204,8 @@ func str_royaume(_ roy: RoyaumeProtocol) -> String {
     Les deux plateau etant face a face, on aura donc la case (0,0) du J1 qui fera face a la case (0, 0) du j1, fera face
     a la case (2,0) du J2
 
+    S'il n'y a pas de cartes a une position, la case du tableau contiendra nil
+
     Le tableau[4][3] de Carte resultant sera sous cette forme, ou (x,y) represente la carte aux coordonnees x,y
     3   (2,1)   (1,1)   (0,1)   |   Arriere J2
     2   (2,0)   (1,0)   (0,0)   |   Front J2
@@ -207,34 +215,164 @@ func str_royaume(_ roy: RoyaumeProtocol) -> String {
 
           ==> par exemple : tab[2][1] renvoie la carte en position (1,0) du plateau du J2
 */
-func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) -> [[CarteProtocol]] {
-    var tab = [[CartePotocol]]();
-    var ligne1 = [CartePotocol]();
-    ligne1.insert(p_joueur_actif.carte_en_position(0, 1), at: 0)
-    ligne1.insert(p_joueur_actif.carte_en_position(1, 1), at: 1)
-    ligne1.insert(p_joueur_actif.carte_en_position(2, 1), at: 2)
+func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) -> [[Carte?]] {
+    var tab = [[Carte?]]();
 
-    var ligne2 = [CartePotocol]();
-    ligne2.insert(p_joueur_actif.carte_en_position(0, 0), at: 0)
-    ligne2.insert(p_joueur_actif.carte_en_position(1, 0), at: 1)
-    ligne2.insert(p_joueur_actif.carte_en_position(2, 0), at: 2)
+    // Ligne numero 1
+    var ligne1 = [Carte?]();
+    if let c = p_joueur_actif.carte_en_position(0, 1) {
+        ligne1.insert(c, at: 0)
+    } else {
+        ligne1.insert(nil, at: 0)
+    }
+    if let c = p_joueur_actif.carte_en_position(1, 1) {
+        ligne1.insert(c, at: 1)
+    } else {
+        ligne1.insert(nil, at: 1)
+    }
+    if let c = p_joueur_actif.carte_en_position(2, 1) {
+        ligne1.insert(c, at: 2)
+    } else {
+        ligne1.insert(nil, at: 2)
+    }
 
-    var ligne3 = [CartePotocol]();
-    ligne3.insert(p_joueur_inactif.carte_en_position(2, 0), at: 0)
-    ligne3.insert(p_joueur_inactif.carte_en_position(1, 0), at: 1)
-    ligne3.insert(p_joueur_inactif.carte_en_position(0, 0), at: 2)
+    // Ligne 2
+    var ligne2 = [Carte?]();
+    if let c = p_joueur_actif.carte_en_position(0, 0) {
+        ligne2.insert(c, at: 0)
+    } else {
+        ligne2.insert(nil, at: 0)
+    }
+    var ligne2 = [Carte?]();
+    if let c = p_joueur_actif.carte_en_position(1, 0) {
+        ligne2.insert(c, at: 1)
+    } else {
+        ligne2.insert(nil, at: 1)
+    }
+    var ligne2 = [Carte?]();
+    if let c = p_joueur_actif.carte_en_position(1, 0) {
+        ligne2.insert(c, at: 2)
+    } else {
+        ligne2.insert(nil, at: 2)
+    }
 
-    var ligne4 = [CartePotocol]();
-    ligne4.insert(p_joueur_inactif.carte_en_position(2, 1), at: 0)
-    ligne4.insert(p_joueur_inactif.carte_en_position(1, 1), at: 1)
-    ligne4.insert(p_joueur_inactif.carte_en_position(0, 1), at: 2)
+    // Ligne 3
+    var ligne3 = [Carte?]();
+    if let c = p_joueur_inactif.carte_en_position(2, 0) {
+        ligne3.insert(c, at: 0)
+    } else {
+        ligne3.insert(nil, at: 0)
+    }
+    if let c = p_joueur_inactif.carte_en_position(1, 0) {
+        ligne3.insert(c, at: 1)
+    } else {
+        ligne3.insert(nil, at: 1)
+    }
+    if let c = p_joueur_inactif.carte_en_position(0, 0) {
+        ligne3.insert(c, at: 2)
+    } else {
+        ligne3.insert(nil, at: 2)
+    }
 
+    // Ligne 4
+    var ligne4 = [Carte?]();
+    if let c = p_joueur_inactif.carte_en_position(2, 1) {
+        ligne4.insert(c, at: 0)
+    } else {
+        ligne4.insert(nil, at: 0)
+    }
+    if let c = p_joueur_inactif.carte_en_position(1, 1) {
+        ligne4.insert(c, at: 1)
+    } else {
+        ligne4.insert(nil, at: 1)
+    }
+    if let c = p_joueur_inactif.carte_en_position(0, 1) {
+        ligne4.insert(c, at: 2)
+    } else {
+        ligne4.insert(nil, at: 2)
+    }
+
+    // Insertion dans le tableau de chacune des lignes
     tab.insert(ligne1, at: 0)
-    tab.insert(ligne1, at: 1)
-    tab.insert(ligne1, at: 2)
-    tab.insert(ligne1, at: 3)
+    tab.insert(ligne2, at: 1)
+    tab.insert(ligne3, at: 2)
+    tab.insert(ligne4, at: 3)
 
     return tab
+
+}
+
+/*
+    Renvoie le tableau de cartes dans la main
+*/
+func tab_main(_ main: Main) -> [Main] {
+    var tab = [Carte]();
+
+    var i = 0
+    for c in main {
+        tab.insert(c, at: i)
+        i += 1
+    }
+
+    return tab
+}
+
+/*
+    Propose au joueur de deployer une unite et de la placer sur son plateaus
+*/
+func deployer_carte(_ main: Main, _ plateau: Plateau) {
+    // Affichage de la main du J1
+    print(str_main(main))
+
+    // On reccupere un tableau de cartes de la main
+    var tab_main_j1 = tab_main(main_j1)
+
+    // Cree un tableau des reponses admissibles
+    var rep_admissibles = [String]()
+    for i in (0..<count(tab_main_j1)) {
+        rep_admissibles.append(str(i))
+    }
+
+    // Demande au joueur
+    var rep = Int(input("Choisir une carte de votre main a placer sur le Royaume", rep_admissibles))
+
+    // Identifie la carte choisie en fonction de la reponse
+    var carte_choisie = tab_main_j1[rep]
+
+    var placee: Bool = false
+    while !placee {
+        // Affiche le plateau
+        print(str_plateau(plateau))
+
+        // Cree un tableau des reponses admissibles
+        var posX = Int(input("Choisir la position x (verticale) ou assigner cette carte", ["0", "1", "2"]))
+        var posY = Int(input("Choisir la position y (horizontale) ou assigner cette carte", ["0", "1"]))
+
+        var echanger : Bool = false
+        // Ajoute la carte au plateau
+        do {
+            try plateau.ajouter_plateau(carte_choisie, posX, posY)
+            placee = true
+        } catch {
+            var reponse: String = ""
+            reponse = print("Cette position est deja occupee, voulez vous echanger ces deux cartes ?", ["Y", "N"])
+            if reponse == "Y" {
+                echanger = true
+            }
+        }
+        if (echanger) {
+            if let c2 = plateau.carte_en_position(posX, posY) {
+                main.ajouter_main(c2)
+                do {
+                    try plateau.ajouter_plateau(carte_choisie, posX, posY)
+                    placee = true
+                } catch{
+                    print ("erreur : Veuillez reessayer")
+                }
+            }
+        }
+    }
+
 
 }
 
@@ -284,7 +422,6 @@ func init_pioche() -> Pioche {
 }
 
 
-
 // ===== MAIN ===== //
 
 
@@ -326,13 +463,27 @@ main_j2.ajouter_main(roi2)
 
 // Piocher + Ajout main
 for i in (1...3) {
-    main_j1.ajouter_main(pioche_j1.piocher())
+    if let c = pioche_j1.piocher() {
+        main_j1.ajouter_main(c)
+    }
 }
 for i in (1...3) {
-    main_j2.ajouter_main(pioche_j2.piocher())
+    if let c = pioche_j2.piocher() {
+        main_j2.ajouter_main(c)
+    }
 }
 
 // -- Piocher une carte dans la pioche et la placer dans le Royaume (pour les 2 joueurs) -- //
+if let c = pioche_j1.piocher() {
+    royaume_j1.ajouter_royaume(c)
+}
+if let c = pioche_j2.piocher() {
+    royaume_j2.ajouter_royaume(c)
+}
 
+// -- J1 : Choisir n’importe quelle carte de sa main et la placer sur le Front
+
+
+// Demande au J1 de choisir une carte de sa main
 
 

@@ -332,6 +332,7 @@ func tab_main(_ main: Main) -> [Main] {
 /*
     Propose au joueur de deployer une unite et de la placer sur son plateau
     Si la position renseignee est deja occupee, propose d'echanger les deux cartes. Si le joueur refuse
+    alors redemande de nouvelles positions ou placer la carte
 */
 func deployer_carte(_ main: Main, _ plateau: Plateau) {
     // Affichage de la main du J1

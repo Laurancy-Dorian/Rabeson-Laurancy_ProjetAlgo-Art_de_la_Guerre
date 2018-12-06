@@ -37,6 +37,13 @@ public protocol CarteProtocol {
     // Post : retourne la puissance d'attaque de la carte
     func puissance_attaque() -> Int
 
+    // puissance_attaque : CarteProtocol x Int -> CarteProtocol
+    // Param : la puissance d'attaque a appliquer
+    // Pre : la puissance d'attaque doit etre prositive
+    // Pre : la puissance d'attaque est comprise entre 1 et 6 (inclus)
+    // Post : modifie la puissance d'attaque de la carte
+    mutating func puissance_attaque(_ puis_att: Int) 
+
     // pv_defensif : CarteProtocol -> CarteProtocol x Int
     // Post : retourne les pv de la carte lorsqu'elle est en statut defensif
     func pv_defensif() -> Int
@@ -102,7 +109,6 @@ public protocol CarteProtocol {
     //			Entier negatif : la carte attaquee est morte
     //			Entier nul : la carte attaquee est capturee
     //			Entier positif : les degats subits par la carte attaquee si elle n'a pas ete tuee ou capturee
-    // Post : la carte attaquante doit etre en statut offensif
     func attaque(_ carte_attaquee: CarteProtocol) throws -> Int
 
 }

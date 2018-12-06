@@ -1,5 +1,3 @@
-import ArtOfWar
-
 ///////////////////////////////
 ////// ART OF WAR - MAIN //////
 ///////////////////////////////
@@ -7,6 +5,8 @@ import ArtOfWar
 
 // ===== FONCTIONS DU MAIN ===== //
 
+
+// -- Fonctions d'interface -- //
 /*
   lire_input :  -> String?
   Lis la ligne courante et la renvoie sous forme de chaine de caractere
@@ -86,6 +86,7 @@ func input(_ msg: String = "Selectionnez votre reponse", _ rep_possibles: [Strin
     return reponse;
 }
 
+// -- Fonctions d'affichage -- //
 
 /*
     Renvoie les donnees de la carte passee en parametre sous la forme d'une chaine de caracteres
@@ -125,6 +126,67 @@ func str_carte_red(_ c: CarteProtocol) -> String {
 }
 
 
+func str_plateau(_ plateau: PlateauProtocol) -> String {
+    var str: String = ""
+    for i in (0...1) {
+        for j in (0...2) {
+            str += str_carte_red(plateau.carte_en_position(i, j)) + "\t"
+        }
+        str+= "\n"
+    }
+    return str
+}
+
+/*
+    Renvoie les donnees du champ de bataille sur la forme de chaine de caracteres selon le point de vue du joueur actif
+    Ses troupes seront affichees en bas, les troupes enemies en haut
+    Parameters :
+        - p_joueur_actif    Le plateau du joueur actif
+        - p_joueur_inactif  Le plateau du joueur inactif
+*/
+func str_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) -> String {
+    var str: String = ""
+    let empty: String = "VIDE"
+
+    var tab = align_champ_bataille(p_joueur_actif, p_joueur_inactif)
+
+    for ligne in tab.reverse() {
+        for carte in ligne {
+            str += str_carte_red(carte)
+            str += "\t"
+        }
+        str += "\n"
+    }
+
+    return str;
+}
+
+/*
+    Renvoie les stats de toutes les cartes presentes dans la main du joueur sous la forme de chaine de caractere
+    Parameters :
+        - main  La main a afficher
+*/
+func str_main(_ main: MainProtocol) -> String {
+    var str: String = ""
+    for c in main {
+        str += str_carte_stats(c) + "\n"
+    }
+    return str
+}
+
+
+func str_royaume(_ roy: RoyaumeProtocol) -> String {
+    var str: String = ""
+    str += "Royaume (Du plus ancien au plus recent) : \n"
+    for carte in roy {
+        str += str_carte_red(carte) + "\n"
+    }
+    return str
+}
+
+
+// -- Fonctions de calculs -- //
+
 /*
     Assigne les differentes cartes des plateaux passees en parametre dans un tableau.
     La ligne 0 est l'arriere du plateau du j1
@@ -144,24 +206,24 @@ func str_carte_red(_ c: CarteProtocol) -> String {
 
           ==> par exemple : tab[2][1] renvoie la carte en position (1,0) du plateau du J2
 */
-func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) -> [CarteProtocol] {
+func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) -> [[CarteProtocol]] {
     var tab = [[CartePotocol]]();
     var ligne1 = [CartePotocol]();
     ligne1.insert(p_joueur_actif.carte_en_position(0, 1), at: 0)
     ligne1.insert(p_joueur_actif.carte_en_position(1, 1), at: 1)
     ligne1.insert(p_joueur_actif.carte_en_position(2, 1), at: 2)
 
-    ligne2 = [CartePotocol]();
+    var ligne2 = [CartePotocol]();
     ligne2.insert(p_joueur_actif.carte_en_position(0, 0), at: 0)
     ligne2.insert(p_joueur_actif.carte_en_position(1, 0), at: 1)
     ligne2.insert(p_joueur_actif.carte_en_position(2, 0), at: 2)
 
-    ligne3 = [CartePotocol]();
+    var ligne3 = [CartePotocol]();
     ligne3.insert(p_joueur_inactif.carte_en_position(2, 0), at: 0)
     ligne3.insert(p_joueur_inactif.carte_en_position(1, 0), at: 1)
     ligne3.insert(p_joueur_inactif.carte_en_position(0, 0), at: 2)
 
-    ligne4 = [CartePotocol]();
+    var ligne4 = [CartePotocol]();
     ligne4.insert(p_joueur_inactif.carte_en_position(2, 1), at: 0)
     ligne4.insert(p_joueur_inactif.carte_en_position(1, 1), at: 1)
     ligne4.insert(p_joueur_inactif.carte_en_position(0, 1), at: 2)
@@ -175,49 +237,28 @@ func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif:
 
 }
 
-func str_plateau(_ plateau: PlateauProtocol) {
-    var str: String = ""
-
-
-
-}
+// -- Fonctions d'initialisations -- //
 
 /*
-    Renvoie les donnees du champ de bataille sur la forme de chaine de caracteres selon le point de vue du joueur actif
-    Ses troupes seront affichees en bas, les troupes enemies en haut
-    Parameters :
-        - p_joueur_actif    Le plateau du joueur actif
-        - p_joueur_inactif  Le plateau du joueur inactif
+    Initialise les pioches en y ajoutant 9 Cartes de type "soldat", 6 de type "garde" et 5 de type "archer"
+    retourne la pioche creee
 */
-func str_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) {
-    var str: String = ""
-    let empty: String = "VIDE"
-
-    var tab = align_champ_bataille(p_joueur_actif, p_joueur_inactif)
-
-    for ligne in tab.reverse() {
-        for carte in ligne {
-            str += str_carte_red(carte)
-            str += "\t"
-        }
-        str += "\n"
+func init_pioche (_ pioche : Pioche) -> Pioche {
+    for i in (0...8) {
+        var c = new Carte("Soldat", 1, )
     }
-
-    return str;
 }
 
-/*
-    Renvoie les stats de toutes les cartes presentes dans la main du joueur
-    Parameters :
-        - main  La main a afficher
-*/
-func str_main(_ main: MainProtocol) {
-    var str: String = ""
-    for c in main {
-        str += str_carte_stats(c) + "\n"
-    }
-    return str
-}
 
 
 // ===== MAIN ===== //
+
+
+// -- Remplis les pioches des 2 joueurs de 9 soldats, 6 gardes et 5 archers
+
+// Instanciation des pioches
+var pioche_j1 = new Pioche()
+var pioche_j2 = new Pioche()
+
+
+

@@ -30,7 +30,7 @@ public protocol RoyaumeProtocol: Sequence {
       Pre : le Royaume n'est pas vide, sinon renvoie une erreur
       Post : retire la carte du Royaume
     */
-    mutating func retirer_royaume() throws -> CarteProtocol // TODO On renvoie ?
+    mutating func retirer_royaume() throws -> CarteProtocol
 
     /*
       est_vide : RoyaumeProtocol -> RoyaumeProtocol x Bool

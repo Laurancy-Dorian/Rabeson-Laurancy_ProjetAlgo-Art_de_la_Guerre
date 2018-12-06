@@ -1,3 +1,5 @@
+import protocol CarteProtocol
+
 /* MainProtocol (ou La Main) represente la collection qui contiendra des CarteProtocol (Cartes)
   Une MainProtocol possede les caracteristiques suivantes :
     On doit pouvoir ajouter des cartes a La Main
@@ -22,13 +24,13 @@ public protocol MainProtocol: Sequence {
     mutating func ajouter_main(_ carte: CarteProtocol)
 
     /*
-      retirer_main : MainProtocol x CarteProtocl -> MainProtocol x CarteProtocol
+      retirer_main : MainProtocol x CarteProtocol -> MainProtocol x CarteProtocol
       retire la carte de la main : la carte a retirer ne sera plus dans la Main
       Param : la carte a retirer
       Pre : La main ne doit pas etre vide
       Post : renvoie la carte retiree si elle est retiree
     */
-    mutating func retirer_main(_ carte: CarteProtocol) throws -> CarteProtocol // TODO verif si on renvoie vraiment vu qu'on la passe en parametre
+    mutating func retirer_main(_ carte: CarteProtocol) throws -> CarteProtocol
 
     /*
       count_main : MainProtocol -> MainProtocol x Int

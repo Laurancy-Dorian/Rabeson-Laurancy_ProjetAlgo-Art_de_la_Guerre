@@ -275,7 +275,6 @@ func test_tuer() -> Int{
 
 func test_count_cartes_qui_peuvent_attaquer() -> Int{
     var p1 = Plateau()
-    // statut = 1 ça veut dire peut encore attaquer
     p1.ajouter_plateau(carte, 0, 0)
 
     if p1.count_cartes_qui_peuvent_attaquer() != 0 {
@@ -304,7 +303,7 @@ var nb_test_ok: Int = 0;
 var nb_test_tot: Int = 0;
 
 nb_test_tot += 1;
-nb_test_ok += test_ ajouter_plateau();
+nb_test_ok += test_ajouter_plateau();
 
 nb_test_tot += 1;
 nb_test_ok += test_retirer_plateau();

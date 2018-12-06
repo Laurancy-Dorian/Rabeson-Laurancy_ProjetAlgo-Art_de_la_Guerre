@@ -3,7 +3,17 @@
 // Le test passe si init n'est pas nil.
 // Renvoie 1 si le test passe, 0 sinon
 
-func test_init() {
+/*
+    test_init : -> Int
+    verifie si l'initialisation d'une carte est bien effectuee
+    Une carte doit avoir :
+    - un type_carte qui est un String
+    - une puissance_attaque qui est un entier positif
+    - des pv_offensifs et pv_defensifs qui sont des entiers positifs
+    - pv_defensif est plus grand que pv_offensif
+    - une portee qui est un tuple d'entier non-nuls
+*/
+func test_init() -> Int{
     print("== Test de l'init(String x Int x Int x Int x (Int,Int)[]) ==");
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     var porteeVide = [];
@@ -72,7 +82,11 @@ func test_init() {
     return 1
 }
 
-func test_puissance_attaque() {
+/*
+    test_puissance_attaque : -> Int
+    verifie si la fonction puissance_attaque() est correcte
+*/
+func test_puissance_attaque() -> Int{
     print("== Test de puissance_attaque() ==");
 
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
@@ -102,7 +116,7 @@ func test_puissance_attaque() {
     return 1;
 }
 
-func test_pv_defensif() {
+func test_pv_defensif() -> Int{
     print("== Test de pv_defensif() ==");
 
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
@@ -149,7 +163,7 @@ func test_pv_defensif() {
 }
 
 
-func test_pv_offensif() {
+func test_pv_offensif() -> Int{
     print("== Test de pv_offensif() ==");
 
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
@@ -195,7 +209,7 @@ func test_pv_offensif() {
     return 1;
 }
 
-func test_statut() {
+func test_statut() -> Int{
     print("== Test de statut() ==");
 
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
@@ -241,7 +255,7 @@ func test_statut() {
     return 1;
 }
 
-func test_portee() {
+func test_portee() -> Int{
     print("== Test de portee() ==");
 
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
@@ -275,7 +289,7 @@ func test_portee() {
 }
 
 
-func test_type_carte() {
+func test_type_carte() -> Int{
     print("== Test de type_carte() ==");
 
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
@@ -308,7 +322,7 @@ func test_type_carte() {
     return 1;
 }
 
-func test_degats_subis() {
+func test_degats_subis() -> Int{
     print("== Test de degats_subis() ==");
 
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
@@ -339,7 +353,7 @@ func test_degats_subis() {
     return 1;
 }
 
-func test_attaque() {
+func test_attaque() -> Int{
     print("== Test de attaque() ==");
 
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];

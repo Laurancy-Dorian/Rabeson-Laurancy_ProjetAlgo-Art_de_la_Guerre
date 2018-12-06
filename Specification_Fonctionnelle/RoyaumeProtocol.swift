@@ -22,7 +22,7 @@ public protocol RoyaumeProtocol: Sequence {
       Pre : la carte a ajouter ne doit pas etre deja dans le Royaume
       Post : ajoute la carte au Royaume
     */
-    public mutating func ajouter_royaume(carte: CarteProtocol)
+    public mutating func ajouter_royaume(_ carte: CarteProtocol)
 
     /*
       retirer_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol x CarteProtocol
@@ -30,7 +30,7 @@ public protocol RoyaumeProtocol: Sequence {
       Pre : la carte doit etre dans le Royaume
       Post : retire la carte du Royaume
     */
-    public mutating func retirer_royaume(carte: CarteProtocol) -> CarteProtocol // TODO On renvoie ?
+    public mutating func retirer_royaume(_ carte: CarteProtocol) -> CarteProtocol // TODO On renvoie ?
 
     /*
       est_vide : RoyaumeProtocol -> RoyaumeProtocol x Bool

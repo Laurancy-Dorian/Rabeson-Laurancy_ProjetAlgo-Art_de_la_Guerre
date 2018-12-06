@@ -1,32 +1,16 @@
-import artofwar
-
 // === Tests Unitaires d'une Carte ===
 
 // Le test passe si init n'est pas nil.
 // Renvoie 1 si le test passe, 0 sinon
-func test_init() -> Int {
-    print("== Test de l'init() ==");
 
-    var c1: CarteProtocol = Carte();
-    if c1 {
-        print("Test init() ok");
-    } else {
-        print("Test init() pas ok : la carte n'a pas ete initialise");
-        return 0;
-    }
-    print("== Fin test init() ==");
-    return 1;
-
-}
-
-func test_init2() {
+func test_init() {
     print("== Test de l'init(String x Int x Int x Int x (Int,Int)[]) ==");
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     var porteeVide = [];
 
     // Carte valide
     do {
-        try var c1: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
         print("Test Carte valide Ok")
     } catch {
         print("Erreur d'init : Une carte valide a renvoye une exception");
@@ -36,7 +20,7 @@ func test_init2() {
 
     // Cartes non valides
     do {
-        try var c2: CarteProtocol = Carte("", 3, 4, 3, portee);
+        try var c2 = Carte("", 3, 4, 3, portee);
         print("Erreur d'init : Une carte ne peut pas avoir de chaine vide en type_carte");
         return 0;
     } catch {
@@ -44,7 +28,7 @@ func test_init2() {
     }
 
     do {
-        try var c3: CarteProtocol = Carte("Soldat", -1, 4, 3, portee);
+        try var c3 = Carte("Soldat", -1, 4, 3, portee);
         print("Erreur d'init : Une carte ne peut pas avoir de valeur negative pour puissance_attaque");
         return 0;
     } catch {
@@ -52,7 +36,7 @@ func test_init2() {
     }
 
     do {
-        try var c4: CarteProtocol = Carte("Soldat", 3, -1, -1, portee);
+        try var c4 = Carte("Soldat", 3, -1, -1, portee);
         print("Erreur d'init : Une carte ne peut pas avoir de valeur negative pour les pv");
         return 0;
     } catch {
@@ -61,7 +45,7 @@ func test_init2() {
 
     do {
         // Pv def < pf off ==> Carte non valide
-        try var c5: CarteProtocol = Carte("Soldat", 3, 1, 3, portee);
+        try var c5  = Carte("Soldat", 3, 1, 3, portee);
         print("Erreur d'init : Une carte ne peut pas avoir pv_defensif < pv_offensif");
         return 0;
     } catch {
@@ -69,7 +53,7 @@ func test_init2() {
     }
 
     do {
-        try var c6: CarteProtocol = Carte("Soldat", 3, 4, 3, nil);
+        try var c6 = Carte("Soldat", 3, 4, 3, nil);
         print("Erreur d'init : Une carte ne peut pas avoir nil en portee");
         return 0;
     } catch {
@@ -77,7 +61,7 @@ func test_init2() {
     }
 
     do {
-        try var c7: CarteProtocol = Carte("Soldat", 3, 4, 3, porteeVide);
+        try var c7 = Carte("Soldat", 3, 4, 3, porteeVide);
         print("Erreur d'init : Une carte ne peut pas avoir un tableau vide en portee");
         return 0;
     } catch {
@@ -94,7 +78,7 @@ func test_puissance_attaque() {
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     // Carte valide
     do {
-        try var c1: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
         if (c1.puissance_attaque() != 3) {
             print("Test ko : la puissance d'attaque ne renvoie pas la bonne valeur")
             return 0;
@@ -107,7 +91,7 @@ func test_puissance_attaque() {
     }
 
     do {
-        try var c2: CarteProtocol = Carte("Soldat", -1, 4, 3, portee);
+        try var c2 = Carte("Soldat", -1, 4, 3, portee);
         print("Test ko : La puissance d'attaque ne peut pas etre negative");
         return 0;
     } catch {
@@ -124,7 +108,7 @@ func test_pv_defensif() {
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     // Carte valide
     do {
-        try var c1: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
         if (c1.pv_defensif() != 4) {
             print("Test ko : pv_defensif ne renvoie pas la bonne valeur")
             return 0;
@@ -137,7 +121,7 @@ func test_pv_defensif() {
     }
 
     do {
-        try var c2: CarteProtocol = Carte("Soldat", 4, -1, 3, portee);
+        try var c2 = Carte("Soldat", 4, -1, 3, portee);
         print("Test ko : Les pv_defensif ne peuvent pas etre negatifs");
         return 0;
     } catch {
@@ -145,7 +129,7 @@ func test_pv_defensif() {
     }
 
     do {
-        try var c3: CarteProtocol = Carte("Soldat", 4, 0, 3, portee);
+        try var c3 = Carte("Soldat", 4, 0, 3, portee);
         print("Test ko : Les pv_defensif ne peuvent pas etre nuls");
         return 0;
     } catch {
@@ -153,7 +137,7 @@ func test_pv_defensif() {
     }
 
     do {
-        try var c4: CarteProtocol = Carte("Soldat", 4, 3, 5, portee);
+        try var c4 = Carte("Soldat", 4, 3, 5, portee);
         print("Test ko : Les pv_defensif ne peuvent pas etre etre inferieurs aux pv offensifs");
         return 0;
     } catch {
@@ -171,7 +155,7 @@ func test_pv_offensif() {
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     // Carte valide
     do {
-        try var c1: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
         if (c1.pv_offensif() != 3) {
             print("Test ko : pv_offensif ne renvoie pas la bonne valeur")
             return 0;
@@ -184,7 +168,7 @@ func test_pv_offensif() {
     }
 
     do {
-        try var c2: CarteProtocol = Carte("Soldat", 4, 3, -1, portee);
+        try var c2 = Carte("Soldat", 4, 3, -1, portee);
         print("Test ko : Les pv_offensif ne peuvent pas etre negatifs");
         return 0;
     } catch {
@@ -192,7 +176,7 @@ func test_pv_offensif() {
     }
 
     do {
-        try var c3: CarteProtocol = Carte("Soldat", 4, 2, 0, portee);
+        try var c3 = Carte("Soldat", 4, 2, 0, portee);
         print("Test ko : Les pv_offensif ne peuvent pas etre nuls");
         return 0;
     } catch {
@@ -200,7 +184,7 @@ func test_pv_offensif() {
     }
 
     do {
-        try var c4: CarteProtocol = Carte("Soldat", 4, 3, 5, portee);
+        try var c4 = Carte("Soldat", 4, 3, 5, portee);
         print("Test ko : Les pv_offensif ne peuvent pas etre etre superieur aux pv defensif");
         return 0;
     } catch {
@@ -217,7 +201,7 @@ func test_statut() {
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     // Carte valide
     do {
-        try var c1: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
     } catch {
         print("Erreur d'init : Une carte valide a renvoye une exception");
         return 0;
@@ -263,7 +247,7 @@ func test_portee() {
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     // Carte valide
     do {
-        try var c1: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
     } catch {
         print("Erreur d'init : Une carte valide a renvoye une exception");
         return 0;
@@ -279,7 +263,7 @@ func test_portee() {
     var porteeNonValide: [(Int, Int)] = [(1, 2), (0, 0)];
     // Carte valide
     do {
-        try var c2: CarteProtocol = Carte("Soldat", 3, 4, 3, porteeNonValide);
+        try var c2 = Carte("Soldat", 3, 4, 3, porteeNonValide);
         print("Test ko : Portee (0,0)  non geree");
         return 0;
     } catch {
@@ -297,7 +281,7 @@ func test_type_carte() {
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     // Carte valide
     do {
-        try var c1: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
     } catch {
         print("Erreur d'init : Une carte valide a renvoye une exception");
         return 0;
@@ -311,7 +295,7 @@ func test_type_carte() {
     }
 
     do {
-        try var c1: CarteProtocol = Carte("", 3, 4, 3, portee);
+        try var c1 = Carte("", 3, 4, 3, portee);
         print("Test Ko : Chane vide pas valable")
         return 0
     } catch {
@@ -330,7 +314,7 @@ func test_degats_subis() {
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     // Carte valide
     do {
-        try var c1: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
     } catch {
         print("Erreur d'init : Une carte valide a renvoye une exception");
         return 0;
@@ -361,8 +345,8 @@ func test_attaque() {
     var portee: [(Int, Int)] = [(1, 2), (0, 1)];
     // Carte valide
     do {
-        try var c1: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
-        try var c2: CarteProtocol = Carte("Soldat", 3, 4, 3, portee);
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
+        try var c2 = Carte("Soldat", 3, 4, 3, portee);
     } catch {
         print("Erreur d'init : Une carte valide a renvoye une exception");
         return 0;
@@ -429,9 +413,6 @@ var nb_test_tot: Int = 0;
 
 nb_test_tot += 1;
 nb_test_ok += test_init();
-
-nb_test_tot += 1;
-nb_test_ok += test_init2();
 
 nb_test_tot += 1;
 nb_test_ok += test_puissance_attaque();

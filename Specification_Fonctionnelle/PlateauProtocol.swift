@@ -45,7 +45,7 @@ public protocol PlateauProtocol: Sequence {
       Pre : la case du plateau doit etre vide
       Post : la carte est ajoutee au plateau
     */
-    public mutating func ajouter_plateau(carte: CarteProtocol) throws
+    public mutating func ajouter_plateau(_ carte: CarteProtocol) throws
 
     /*
       retirer_plateau : PlateauProtocol x CarteProtocol -> PlateauProtocol x CarteProtocol
@@ -54,7 +54,7 @@ public protocol PlateauProtocol: Sequence {
       Pre : la carte a retirer doit etre sur le plateau
       Post : la carte est retiree du plateau
     */
-    public mutating func retirer_plateau(carte: CarteProtocol) -> CarteProtocol
+    public mutating func retirer_plateau(_ carte: CarteProtocol) -> CarteProtocol
 
     /*
       position_carte : PlateauProtocol x CarteProtocol -> PlateauProtocol x (Int, Int)
@@ -63,7 +63,7 @@ public protocol PlateauProtocol: Sequence {
       Pre : la carte doit etre sur le plateau
       Post : retourne un tuple d'entier representant la position de la carte
     */
-    public func position_carte(carte: CarteProtocol) -> (Int, Int)
+    public func position_carte(_ carte: CarteProtocol) -> (Int, Int)
 
     /*
       carte_en_position : PlateauProtocol x Int x Int -> PlateauProtocol x CarteProtocol
@@ -73,7 +73,7 @@ public protocol PlateauProtocol: Sequence {
       Pre : y doit etre compris entre 0 et 1
       Post : retourne la carte a la position donnee au parametre
     */
-    public func carte_en_position(x: Int, y: Int) -> CarteProtocol?
+    public func carte_en_position(_ x: Int, _ y: Int) -> CarteProtocol?
 
     /*
       est_occupee : PlateauProtocol x Int x Int -> PlateauProtocol x Bool
@@ -82,7 +82,7 @@ public protocol PlateauProtocol: Sequence {
       Pre : y doit etre compris entre 0 et 1
       Post : retourne true si la case est vide, false sinon
     */
-    public func est_occupee(x: Int, y: Int) -> Bool // TODO utile ? On a carte en position qui renvoie nil si y'en a pas
+    public func est_occupee(_ x: Int, _ y: Int) -> Bool // TODO utile ? On a carte en position qui renvoie nil si y'en a pas
 
     /*
       reorganiser_plateau : PlateauProtocol -> PlateauProtocol
@@ -110,7 +110,7 @@ public protocol PlateauProtocol: Sequence {
       Pre : la carte doit etre sur le plateau
       Post : supprime la carte du plateau si elle meurt
     */
-    public mutating func tuer(carte: CarteProtocol)
+    public mutating func tuer(_ carte: CarteProtocol)
 
     /*
       count_cartes_qui_peuvent_attaquer : PlateauProtocol -> PlateauProtocol x Int

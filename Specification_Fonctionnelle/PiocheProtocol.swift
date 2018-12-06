@@ -14,6 +14,7 @@ protocol PiocheProtocol {
 
     /*
       piocher : PiocheProtocol -> PiocheProtocol x CarteProtocol?
+      renvoie une carte de la collection de la Pioche au hasard
       Pre :
       Post : retourne une carte choisie au hasard dans la Pioche ou nil si la Pioche est vide
     */
@@ -25,7 +26,7 @@ protocol PiocheProtocol {
       Pre : la carte a ajouter ne doit pas etre deja dans la Pioche
       Post : ajoute la carte a la Pioche
     */
-    mutating func ajouter_pioche(carte: CarteProtocol)
+    mutating func ajouter_pioche(_ carte: CarteProtocol)
 
     /*
       count_pioche : PiocheProtocol -> PiocheProtocol x Int

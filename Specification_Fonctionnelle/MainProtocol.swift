@@ -13,14 +13,13 @@ public protocol MainProtocol: Sequence {
     */
     public init()
 
-
     /*
       ajouter_main : MainProtocol x CarteProtocol -> MainProtocol
       Param : la carte a ajouter
       Pre :
       Post : la carte est ajoutee a La Main
     */
-    public mutating func ajouter_main(carte: CarteProtocol)
+    public mutating func ajouter_main(_ carte: CarteProtocol)
 
     /*
       retirer_main : MainProtocol x CarteProtocl -> MainProtocol x CarteProtocol
@@ -28,8 +27,7 @@ public protocol MainProtocol: Sequence {
       Pre :
       Post : renvoie la carte retiree si elle est retiree
     */
-    public mutating func retirer_main(carte: CarteProtocol) -> CarteProtocol // TODO verif si on renvoie vraiment vu qu'on la passe en parametre
-
+    public mutating func retirer_main(_ carte: CarteProtocol) -> CarteProtocol // TODO verif si on renvoie vraiment vu qu'on la passe en parametre
 
     /*
       cartes_en_main : MainProtocol -> MainProtocol x CarteProtocol[]
@@ -56,7 +54,7 @@ public protocol MainProtocol: Sequence {
     /*
 
     */
-    public func make_iterator() -> MainProtocolIterator
+    public func makeIterator() -> MainProtocolIterator
 }
 
 /*

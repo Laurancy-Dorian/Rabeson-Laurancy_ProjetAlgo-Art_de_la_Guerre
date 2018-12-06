@@ -14,6 +14,11 @@
   L'origine du repere se trouve a la premiere colonne du Front : la ligne de Front est a 0, la ligne Arriere est a 1
   La premiere colonne est a 0, la derniere est a 2
 
+  Schema du Plateau pour un joueur :
+  1   (0,0)   (1,0)   (2,0)   |   Front J
+  0   (0,1)   (1,1)   (2,1)   |   Arriere J
+        0       1       2
+
   Sur un Plateau d'un meme joueur on doit pouvoir :
     - y ajouter une carte
     - y retirer une carte
@@ -27,7 +32,6 @@
     - savoir le nombre de carte qui peuvent encore attaquer lors d'un tour
     - savoir quelles sont les cartes qui peuvent encore attaquer lors d'un tour
 */
-// TODO bien definir ce qu'est x et y. Le front est 0, larriere est 1
 public protocol PlateauProtocol: Sequence {
     /*
       init : -> PlateauProtocol
@@ -118,13 +122,32 @@ public protocol PlateauProtocol: Sequence {
       Post : retourne le nombre entier de carte qui peuvent encore attaquer
     */
     public func count_cartes_qui_peuvent_attaquer() -> Int
+
+    /*
+      TODO
+    */
+    public func makeIterator() -> ItPlateauProtocol
 }
 
+
+/*
+  ItPlateauProtocol est le protocol iterateur de PlateauProtocol, qui va donc parcourir la collection 
+  de CarteProtocol du PlateauProtocol
+
+  (rappel) Schema du Plateau :
+     F1(0,0)   F2(1,0)   F3(2,0)   |   Front J
+     A1(0,1)   A2(1,1)   A3(2,1)   |   Arriere J
+    
+  
+  On veut parcourir le Plateau en partant de la Carte en position (0,0) jusqu'en position (3,1)
+*/
 public protocol ItPlateauProtocol : IteratorProtocol {
 
   /*
     next : ItPlateauProtocol -> ItPlateauProtocol x CarteProtocol?
-    retourne la prochaine carte dans la collection du Plateau
+    renvoie la prochaine carte dans la collection du Plateau
+    Pre :
+    Post : retourne la carte suivante dans la collection du Plateau, ou nil si on a atteint le fin de la collection
   */
   public func next() -> CarteProtocol?
 }

@@ -13,7 +13,6 @@ public protocol MainProtocol: Sequence {
     */
     public init()
 
-    public func make_iterator()
 
     /*
       ajouter_main : MainProtocol x CarteProtocol -> MainProtocol
@@ -54,12 +53,23 @@ public protocol MainProtocol: Sequence {
     */
     public func est_vide() -> Bool
 
+    /*
+
+    */
+    public func make_iterator() -> MainProtocolIterator
 }
 
+/*
+  MainProtocolIterator est un iterateur de MainProtocol qui aide au parcours de la collection
+  de MainProtocol.
+*/
 public protocol MainProtocolIterator: IteratorProtocol {
 
     /*
       next : MainProtocolIterator -> MainProtocol x CarteProtocol?
+      renvoie la prochaine carte de la collection de la Main
+      Pre :
+      Post : retourne la carte suivante dans la collection de la Main, ou nil si on a atteint le fin de la collection
     */
     public func next() -> CarteProtocol? 
 }

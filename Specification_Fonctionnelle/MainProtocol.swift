@@ -23,19 +23,12 @@ public protocol MainProtocol: Sequence {
 
     /*
       retirer_main : MainProtocol x CarteProtocl -> MainProtocol x CarteProtocol
+      retire la carte de la main : la carte a retirer ne sera plus dans la Main
       Param : la carte a retirer
       Pre :
       Post : renvoie la carte retiree si elle est retiree
     */
-    public mutating func retirer_main(_ carte: CarteProtocol) -> CarteProtocol // TODO verif si on renvoie vraiment vu qu'on la passe en parametre
-
-    /*
-      cartes_en_main : MainProtocol -> MainProtocol x CarteProtocol[]
-      Donne un tableau de Cartes qui sont contenues dans la main
-      Pre :
-      Post : retourne un tableau de CarteProtocol
-    */
-    public func cartes_en_main() -> [CarteProtocol]
+    public mutating func retirer_main(_ carte: CarteProtocol) throws -> CarteProtocol // TODO verif si on renvoie vraiment vu qu'on la passe en parametre
 
     /*
       count_main : MainProtocol -> MainProtocol x Int

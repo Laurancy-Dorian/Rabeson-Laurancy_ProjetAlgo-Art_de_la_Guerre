@@ -27,10 +27,10 @@ public protocol RoyaumeProtocol: Sequence {
     /*
       retirer_royaume : RoyaumeProtocol x CarteProtocol -> RoyaumeProtocol x CarteProtocol
       Retire la premiere carte/la carte la plus ancienne ajoutee au Royaume (FIFO)
-      Pre : la carte doit etre dans le Royaume
+      Pre : le Royaume n'est pas vide, sinon renvoie une erreur
       Post : retire la carte du Royaume
     */
-    public mutating func retirer_royaume(_ carte: CarteProtocol) -> CarteProtocol // TODO On renvoie ?
+    public mutating func retirer_royaume() throws -> CarteProtocol // TODO On renvoie ?
 
     /*
       est_vide : RoyaumeProtocol -> RoyaumeProtocol x Bool
@@ -59,6 +59,8 @@ public protocol RoyaumeProtocol: Sequence {
 /*
   ItRoyaumeProtocol (ou iterateur de RoyaumeProtocol) est un iterateur qui sert a aider au parcours de la collection
   de RoyaumeProtocol. 
+
+  On itere dans le Royaume de la plus ancienne a la plus recente.
 */
 public protocol ItRoyaumeProtocol: IteratorProtocol {
   /*

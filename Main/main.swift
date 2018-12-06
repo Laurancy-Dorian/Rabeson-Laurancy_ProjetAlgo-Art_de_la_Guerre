@@ -161,14 +161,18 @@ func str_plateau(_ plateau: Plateau) -> String {
 */
 func str_champ_bataille(_ p_joueur_actif: Plateau, _ p_joueur_inactif: Plateau) -> String {
     var str: String = ""
-    let empty: String = "VIDE"
 
     var tab = align_champ_bataille(p_joueur_actif, p_joueur_inactif)
 
     for ligne in tab.reverse() {
         for carte in ligne {
-            str += str_carte_red(carte)
-            str += "\t"
+            if carte != nil {
+                str += str_carte_red(carte)
+                str += "\t"
+            } else {
+                str += "VIDE"
+                str += "\t"
+            }
         }
         str += "\n"
     }
@@ -229,6 +233,23 @@ func str_royaume(_ roy: Royaume) -> String {
 */
 func tour_de_jeu(main: Main, pioche: Pioche, plateau: Plateau, royaume: Royaume, plateau_ennemi: Plateau) -> Int {
     // ==== PHASE DE PREPARATION ==== //
+
+    // -- Passez les cartes sur le champ de bataille du joueurs actif en position défensive -- //
+    // -- Reinitialiser les dégâts subits -- //
+    for c in (plateau) {
+        c.status(0)
+        c.degats_subis(0)
+    }
+
+    // -- Pioche s'il reste des cartes
+    if (pioche.count_pioche() > 0) {
+        if var c = pioche.piocher()
+    }
+    // -- FIN DE LA GUERRE Si la pioche est vide
+    else {
+        
+    }
+
 }
 
 /*
@@ -551,6 +572,9 @@ while (partieTerminee == 0) {
 
     // Tour du J1
     if j_courant == 1 {
+        // Affiche le champ de bataille
+        print (str_champ_bataille(plateau_j1, plateau_j2))
+
         partieTerminee = tour_de_jeu(main_j1, pioche_j1, plateau_j1, royaume_j1, plateau_j2)
 
         // Si la partie n'est pas terminee, le joueur courant devient le J2

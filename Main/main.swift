@@ -205,6 +205,31 @@ func str_royaume(_ roy: Royaume) -> String {
 
 
 // -- Fonctions de calculs -- //
+// TODO
+/*
+    Effectue un tour de jeu :
+        - Remet les cartes du plateau par defaut
+        - Pioche
+        - Choix de l'action (Attaque, deploiement, Rien)
+        - Effectue l'action
+        - Phase de developpement
+
+    Parameters :
+        - main              La main du joueur actif
+        - pioche            La pioche du joueur actif
+        - plateau           Le plateau du joueur actif
+        - royaume           Le royaume du joueur actif
+        - plateau_enemi     Le Plateau du joueur passif
+
+    Return : Un entier caracterisant l'etat de la partie
+        - 0     Si la partie n'est pas terminee
+        - 1     Si le joueur passif a subi des attaques et ne peut plus placer de troupes sur son plateau
+        - 2     Si le ROI du joueur passif est mort
+        - 3     Si la pioche est vide au moment de piocher
+*/
+func tour_de_jeu(main: Main, pioche: Pioche, plateau: Plateau, royaume: Royaume, plateau_ennemi: Plateau) -> Int {
+    // ==== PHASE DE PREPARATION ==== //
+}
 
 /*
     Assigne les differentes cartes des plateaux passees en parametre dans un tableau.
@@ -316,6 +341,8 @@ func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif:
 
 /*
     Renvoie le tableau de cartes dans la main
+    Parameters :
+        - main  La main a traiter
 */
 func tab_main(_ main: Main) -> [Main] {
     var tab = [Carte]();
@@ -362,29 +389,28 @@ func deployer_carte(_ main: Main, _ plateau: Plateau) {
         var posX = Int(input("Choisir la position x (verticale) ou assigner cette carte", ["0", "1", "2"]))
         var posY = Int(input("Choisir la position y (horizontale) ou assigner cette carte", ["0", "1"]))
 
-        var echanger: Bool = false
         // Ajoute la carte au plateau
-        do {
-            try plateau.ajouter_plateau(carte_choisie, posX, posY)
-            placee = true
-        } catch {
-            var reponse: String = ""
-            reponse = print("Cette position est deja occupee, voulez vous echanger ces deux cartes ?", ["Y", "N"])
+        if (plateau.est_occupe(posX, posY)) {
+            reponse = input("Cette position est deja occupee, voulez vous echanger ces deux cartes ?", ["Y", "N"])
             if reponse == "Y" {
-                echanger = true
-            }
-        }
-        if (echanger) {
-            if let c2 = plateau.carte_en_position(posX, posY) {
-                do {
-                    try plateau.retirer_plateau(c2)
-                    try plateau.ajouter_plateau(carte_choisie, posX, posY)
-                    main.ajouter_main(c2)
-                    try main.retirer_main(carte_choisie)
-                    placee = true
-                } catch {
-                    print("erreur : Veuillez reessayer")
+                if let c2 = plateau.carte_en_position(posX, posY) {
+                    do {
+                        try plateau.retirer_plateau(c2)
+                        try plateau.ajouter_plateau(carte_choisie, posX, posY)
+                        main.ajouter_main(c2)
+                        try main.retirer_main(carte_choisie)
+                        placee = true
+                    } catch {
+                        print("erreur : Veuillez reessayer")
+                    }
                 }
+            }
+        } else {
+            do {
+                try plateau.ajouter_plateau(carte_choisie, posX, posY)
+                placee = true
+            } catch {
+                print("Erreur : Veuillez reessayer")
             }
         }
     }
@@ -440,8 +466,11 @@ func init_pioche() -> Pioche {
 
 // ===== MAIN ===== //
 
+// Affichage de debut de partie
+print("==== ART OF WAR ====")
 
-// === INITIALISATION DE LA PARTIE ===
+
+// === INITIALISATION DE LA PARTIE === //
 
 // Instanciation des Mains
 var main_j1: Main = Main()
@@ -497,8 +526,7 @@ if let c = pioche_j2.piocher() {
     royaume_j2.ajouter_royaume(c)
 }
 
-// -- J1 : Choisir n’importe quelle carte de sa main et la placer sur le Front
-
+// -- Choisir n’importe quelle carte de sa main et la placer sur le Front -- //
 
 // Demande au J1 de choisir une carte de sa main
 print("Joueur 1")
@@ -509,3 +537,63 @@ print("Joueur 2")
 deployer_carte(main_j2, plateau_j2)
 
 
+// === JEU === //
+
+// -- Initialise un int qui defini la fin de la partie (si > 0, la partie est terminee, et la condition de faim de
+// partie est determinee en fonction de sa valeur -- //
+var partieTerminee: Int = 0
+
+// Joueur courant = 1
+var j_courant: Int = 1
+
+// Boucle principale des tours
+while (partieTerminee == 0) {
+
+    // Tour du J1
+    if j_courant == 1 {
+        partieTerminee = tour_de_jeu(main_j1, pioche_j1, plateau_j1, royaume_j1, plateau_j2)
+
+        // Si la partie n'est pas terminee, le joueur courant devient le J2
+        if (partieTerminee == 0) {
+            j_courant = 2
+        }
+
+        // Tour du J2
+    } else {
+        partieTerminee = tour_de_jeu(main_j2, pioche_j2, plateau_j2, royaume_j2, plateau_j1)
+
+        // Si la partie n'est pas terminee, le joueur courant devient le J1
+        if (partieTerminee == 0) {
+            j_courant = 1
+        }
+    }
+}
+
+
+// === FIN DE PARTIE === //
+
+// Affichage du message de fin de partie
+
+// Effondrement
+if (partieTerminee == 1) {
+    if (j_courant == 1) {
+        print("Effondrement du joueur 2 : Victoire du joueur 1")
+    } else {
+        print("Effondrement du joueur 1 : Victoire du joueur 2")
+    }
+
+// Execution
+} else if (partieTerminee == 2) {
+    if (j_courant == 1) {
+        print("Le roi du joueur 2 est mort : Victoire du joueur 1")
+    } else {
+        print("Le roi du joueur 1 est mort : Victoire du joueur 2")
+    }
+
+// Fin de la guerre
+} else {
+    print("Fin de la guerre : Egalite")
+}
+
+// Affichage du game over
+print("==== GAME OVER ====")

@@ -10,7 +10,8 @@
   Representation du Plateau :
   Dans ce programme, on considere le Plateau par rapport a des axes orthonormes x et y
   l'axe des x represente les colonnes, l'axe des y represente les lignes
-  L'origine du repere se trouve a la premiere colonne du Front : la ligne de Front est a 0, la ligne Arriere est a 1
+  L'origine du repere se trouve a la premiere colonne du 
+  Front : la ligne de Front est a 0, la ligne Arriere est a 1
   La premiere colonne est a 0, la derniere est a 2
 
   Schema du Plateau pour un joueur :
@@ -93,17 +94,25 @@ public protocol PlateauProtocol: Sequence {
       Pre : y doit etre compris entre 0 et 1
       Post : retourne true si la case est vide, false sinon
     */
-    func est_occupee(_ x: Int, _ y: Int) -> Bool // TODO utile ? On a carte en position qui renvoie nil si y'en a pas
+    func est_occupee(_ x: Int, _ y: Int) -> Bool 
 
     /*
       reorganiser_plateau : PlateauProtocol -> PlateauProtocol
       Reorganise les cartes sur le plateau
-      On utilisera cette fonction lors des combats
-      Si une carte sur le Front est retiree du plateau (mort ou capture) et qu'elle a une carte derriere elle sur l'Arriere
-      la carte derriere est avancee
+
+      On avance les cartes de l'Arriere vers le Front si les cases 
+      du Front sont vides (cad sans carte) comme suit :
+
+      F1(vide)    F2(plein)    F3(vide)
+         ||
+      A1(plein)   A2(plein)    A3(vide)
+
+      Dans cet exemple, la carte en A1 avance en F1 (et pas en F3)
+      Les cartes sont toujours avancees sur les cases directement devant elles
 
       Pre :
-      Post : modifie le placement des cartes sur le plateau
+      Post : Il n'y a plus de cases a l'Arriere pleine si les 
+      cases du Front directement devant elles sont vides
     */
     mutating func reorganiser_plateau()
 
@@ -121,7 +130,7 @@ public protocol PlateauProtocol: Sequence {
       Pre : la carte doit etre sur le plateau
       Post : supprime la carte du plateau si elle meurt
     */
-    mutating func tuer(_ carte: CarteProtocol)
+    mutating func tuer(_ carte: CarteProtocol) throws
 
     /*
       count_cartes_qui_peuvent_attaquer : PlateauProtocol -> PlateauProtocol x Int

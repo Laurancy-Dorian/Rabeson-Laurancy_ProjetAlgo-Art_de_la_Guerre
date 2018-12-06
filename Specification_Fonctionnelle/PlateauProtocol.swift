@@ -5,8 +5,7 @@
   Le Plateau compte deux lignes et trois colonnes
   Les deux lignes representent le Front et l'Arriere du Plateau
   Quand on ajoute des cartes au Plateau, elles doivent etre placees sur le Front
-  Si le Front est occupe, on les place sur l'Arriere, sauf si le joueur
-  souhaite remplacer une carte au Front par une autre carte
+  Si le Front est occupe, on les place sur l'Arriere
 
   Representation du Plateau :
   Dans ce programme, on considere le Plateau par rapport a des axes orthonormes x et y
@@ -38,14 +37,24 @@ public protocol PlateauProtocol: Sequence {
       Creee un plateau vide
     */
     public init()
+
     /*
       ajouter_plateau : PlateauProtocol x CarteProtocol -> PlateauProtocol
-      Ajoute une carte au Front
+      Ajoute une carte aux positions x et y
+
+      Quand on ajoute des cartes au Plateau, elles doivent etre placees sur le Front
+      Si les coordonnees passees en parametres representent une case de l'Arriere 
+      et que la case devant (au Front) est vide alors on place la carte sur le Front
+
       Param : Carte a ajouter au plateau
+      Param : position x ou placer la carte
+      Param : position y ou placer la carte
       Pre : la case du plateau doit etre vide
       Post : la carte est ajoutee au plateau
+      Post : lance une erreur "" si une carte est deja presente (n'ajoute pas la carte)
+      Post : lance une erreur si les coordonnes 
     */
-    public mutating func ajouter_plateau(_ carte: CarteProtocol) throws
+    public mutating func ajouter_plateau(_ carte: CarteProtocol, _ posX: Int, _ posY: Int) throws
 
     /*
       retirer_plateau : PlateauProtocol x CarteProtocol -> PlateauProtocol x CarteProtocol
@@ -124,14 +133,15 @@ public protocol PlateauProtocol: Sequence {
     public func count_cartes_qui_peuvent_attaquer() -> Int
 
     /*
-      TODO
+      makeIterator : PlateauProtocol -> PlateauProtocol x PlateauProtocolIterator
+      cree un iterateur sur la collection de cartes du Plateau
     */
-    public func makeIterator() -> ItPlateauProtocol
+    public func makeIterator() -> PlateauProtocolIterator
 }
 
 
 /*
-  ItPlateauProtocol est le protocol iterateur de PlateauProtocol, qui va donc parcourir la collection 
+  PlateauProtocolIterator est le protocol iterateur de PlateauProtocol, qui va donc parcourir la collection 
   de CarteProtocol du PlateauProtocol
 
   (rappel) Schema du Plateau :
@@ -141,10 +151,10 @@ public protocol PlateauProtocol: Sequence {
   
   On veut parcourir le Plateau en partant de la Carte en position (0,0) jusqu'en position (3,1)
 */
-public protocol ItPlateauProtocol : IteratorProtocol {
+public protocol PlateauProtocolIterator : IteratorProtocol {
 
   /*
-    next : ItPlateauProtocol -> ItPlateauProtocol x CarteProtocol?
+    next : PlateauProtocolIterator -> PlateauProtocolIterator x CarteProtocol?
     renvoie la prochaine carte dans la collection du Plateau
     Pre :
     Post : retourne la carte suivante dans la collection du Plateau, ou nil si on a atteint le fin de la collection

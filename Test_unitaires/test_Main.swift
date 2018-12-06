@@ -9,9 +9,6 @@ do {
     try var carte = Carte("Soldat", 3, 4, 3, portee);
 } catch {}
 
-/*
-
-*/
 func test_ajouter_main() -> Int{
     var m1 = Main()
     m1.ajouter_main(carte)
@@ -25,6 +22,8 @@ func test_ajouter_main() -> Int{
     if isIn == false {
         print("KO : La carte n'est pas dans la main")
         return 0
+    } else {
+        print("OK")
     }
 
     if m1.count_main() != 0 {
@@ -59,6 +58,8 @@ func test_retirer_main() -> Int{
     if isNotIn == false {
         print("KO : La carte est toujours dans la main")
         return 0
+    } else {
+        print("OK")
     }
 
     if m1.count_main() >= 1 {
@@ -93,6 +94,13 @@ func test_count_main() -> Int{
         print("KO : On compte un nombre de carte different de 1")
         return 0
     }
+
+    if m1.count_main() == 1 {
+        print("OK")
+    } else {
+        print("KO : On n'a rajoute une carte et on ne la compte pas")
+    }
+
     do {
         try var carte = m1.retirer_main(carte)
     } catch {}
@@ -111,6 +119,8 @@ func test_est_vide() -> Int{
     if !m1.est_vide() {
         print("KO : La main est censee etre vide")
         return 0
+    } else {
+        print("OK")
     }
 
     m1.ajouter_main(carte)
@@ -118,6 +128,8 @@ func test_est_vide() -> Int{
     if m1.est_vide() {
         print("KO : La main n'est aps censee etre vide")
         return 0
+    } else {
+        print("OK")
     }
 
     return 1

@@ -49,22 +49,22 @@ public protocol RoyaumeProtocol: Sequence {
     public func count_royaume() -> Int
 
     /*
-      makeIterator : RoyaumeProtocol -> Royaume x ItRoyaumeProtocol
+      makeIterator : RoyaumeProtocol -> RoyaumeProtocol x RoyaumeProtocolIterator
       cree un iterateur sur la collection de cartes en FIFO (premiere carte ajoutee, premiere carte sortie)
     */
-    public func makeIterator() -> ItRoyaumeProtocol 
+    public func makeIterator() -> RoyaumeProtocolIterator 
 }
 
 
 /*
-  ItRoyaumeProtocol (ou iterateur de RoyaumeProtocol) est un iterateur qui sert a aider au parcours de la collection
+  RoyaumeProtocolIterator (ou iterateur de RoyaumeProtocol) est un iterateur qui sert a aider au parcours de la collection
   de RoyaumeProtocol. 
 
   On itere dans le Royaume de la plus ancienne a la plus recente.
 */
-public protocol ItRoyaumeProtocol: IteratorProtocol {
+public protocol RoyaumeProtocolIterator: IteratorProtocol {
   /*
-    next : ItRoyaumeProtocol -> ItRoyaumeProtocol x CarteProtocol?
+    next : RoyaumeProtocolIterator -> RoyaumeProtocolIterator x CarteProtocol?
     renvoie la prochaine carte dans la collection du Royaume
     Pre :
     Post : retourne la carte suivante dans la collection du Royaume, ou nil si on a atteint le fin de la collection

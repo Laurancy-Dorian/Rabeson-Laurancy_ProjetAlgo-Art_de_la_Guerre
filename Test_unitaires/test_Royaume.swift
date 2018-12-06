@@ -22,6 +22,8 @@ func test_ajouter_royaume() -> Int{
     if isIn == false {
         print("KO : La carte n'est pas dans le Royaume")
         return 0
+    } else {
+        print("OK")
     }
 
     if m1.count_royaume() != 0 {
@@ -56,6 +58,8 @@ func test_retirer_royaume() -> Int{
     if isNotIn == false {
         print("KO : La carte est toujours dans le Royaume")
         return 0
+    } else {
+        print("OK")
     }
 
     if r1.count_royaume() >= 1 {
@@ -81,6 +85,8 @@ func test_retirer_royaume() -> Int{
     if retire3 === c2 {
         print("KO : On n'a pas retire la carte la plus ancienne")
         return 0
+    } else {
+        print("OK")
     }
 
     return 1
@@ -92,6 +98,8 @@ func test_est_vide() -> Int{
     if !r1.est_vide() {
         print("KO : Le Royaume est censee etre vide")
         return 0
+    } else {
+        print("OK")
     }
 
     r1.ajouter_royaume(carte)
@@ -99,6 +107,8 @@ func test_est_vide() -> Int{
     if r1.est_vide() {
         print("KO : Le Royaume n'est aps censee etre vide")
         return 0
+    } else {
+        print("OK")
     }
 
     return 1
@@ -110,6 +120,8 @@ func test_count_royaume() -> Int{
     if r1.count_royaume() != 0 {
         print("KO : On compte un nombre de carte different de 0")
         return 0
+    } else {
+        print("OK")
     }
 
     r1.ajouter_royaume(carte)
@@ -117,7 +129,10 @@ func test_count_royaume() -> Int{
     if r1.count_royaume() != 1 {
         print("KO : On compte un nombre de carte different de 1")
         return 0
+    } else {
+        print("OK")
     }
+
     do {
         try var retire = r1.retirer_royaume(carte)
     } catch {}
@@ -125,6 +140,8 @@ func test_count_royaume() -> Int{
     if r1.count_royaume() != 0 {
         print("KO : On compte un nombre de carte different de 0")
         return 0
+    } else {
+        print("OK")
     }
 
     return 1

@@ -45,7 +45,8 @@ public protocol MainProtocol: Sequence {
     public func est_vide() -> Bool
 
     /*
-
+      makeIterator : MainProtocol -> MainProtocol x MainProtocolIterator
+      cree un iterateur sur la collection de cartes de la Main
     */
     public func makeIterator() -> MainProtocolIterator
 }

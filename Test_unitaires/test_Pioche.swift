@@ -31,6 +31,8 @@ func test_piocher() -> Int{
     if isNotIn == false {
         print("KO : La carte est toujours dans la pioche")
         return 0
+    } else {
+        print("OK")
     }
 
     if p1.count_pioche() >= 1 {
@@ -41,7 +43,7 @@ func test_piocher() -> Int{
     }
 
     if let retire2 = p1.piocher() {
-        print("KO : On a retire une carte qui n'est pas dans la pioche")
+        print("KO : On a retire une carte alors que la pioche est vide")
         return 0
     } else {
         print("OK")
@@ -63,9 +65,11 @@ func test_ajouter_pioche() -> Int{
     if isIn == false {
         print("KO : La carte n'est pas dans la pioche")
         return 0
+    } else {
+        print("OK")
     }
 
-    if m1.count_main() != 0 {
+    if p1.count_pioche() != 0 {
         print("OK")
     } else {
         print("KO : On ne compte pas le nombre correct de cartes")
@@ -81,6 +85,8 @@ func test_count_pioche() -> Int{
     if p1.count_pioche() != 0 {
         print("KO : On compte un nombre de carte different de 0")
         return 0
+    } else {
+        print("OK")
     }
 
     p1.ajouter_pioche(carte)
@@ -88,7 +94,10 @@ func test_count_pioche() -> Int{
     if p1.count_pioche() != 1 {
         print("KO : On compte un nombre de carte different de 1")
         return 0
+    } else {
+        print("OK")
     }
+
     do {
         try var retire = p1.piocher()
     } catch {}
@@ -96,6 +105,8 @@ func test_count_pioche() -> Int{
     if p1.count_pioche() != 0 {
         print("KO : On compte un nombre de carte different de 0")
         return 0
+    } else {
+        print("OK")
     }
 
     return 1
@@ -106,31 +117,14 @@ var nb_test_ok: Int = 0;
 var nb_test_tot: Int = 0;
 
 nb_test_tot += 1;
-nb_test_ok += test_init();
+nb_test_ok += test_piocher();
 
 nb_test_tot += 1;
-nb_test_ok += test_puissance_attaque();
+nb_test_ok += test_ajouter_pioche();
 
 nb_test_tot += 1;
-nb_test_ok += test_pv_defensif();
+nb_test_ok += test_count_pioche();
 
-nb_test_tot += 1;
-nb_test_ok += test_pv_offensif();
-
-nb_test_tot += 1;
-nb_test_ok += test_statut();
-
-nb_test_tot += 1;
-nb_test_ok += test_portee();
-
-nb_test_tot += 1;
-nb_test_ok += test_type_carte();
-
-nb_test_tot += 1;
-nb_test_ok += test_degats_subis();
-
-nb_test_tot += 1;
-nb_test_ok += test_attaque();
 
 print("=== FIN DES TESTS ===")
 print("\(nb_test_ok) fonctions ont passe les tests sur \(nb_test_tot)")

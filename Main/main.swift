@@ -92,8 +92,10 @@ func input(_ msg: String = "Selectionnez votre reponse", _ rep_possibles: [Strin
 
 /*
     Renvoie les donnees de la carte passee en parametre sous la forme d'une chaine de caracteres
+    Parameters :
+        - c     La carte a afficher
 */
-func str_carte_stats(_ c: CarteProtocol) -> String {
+func str_carte_stats(_ c: Carte) -> String {
     var str: String = "";
     str += c.type_carte();
     str += "\t Attaque : " + c.puissance_attaque()
@@ -113,8 +115,10 @@ func str_carte_stats(_ c: CarteProtocol) -> String {
 /*
     Renvoie les donnes de la carte passee en parametre de facon reduite sous la forme d'une chaine de caracteres
     Forme : Type (Attaque, statut, PV_restants)
+    Parameters :
+        - c     La carte a afficher
 */
-func str_carte_red(_ c: CarteProtocol) -> String {
+func str_carte_red(_ c: Carte) -> String {
     var str: String = "";
     str += c.type_carte()
     str += " (" + c.puissance_attaque()
@@ -127,8 +131,12 @@ func str_carte_red(_ c: CarteProtocol) -> String {
     return str;
 }
 
-
-func str_plateau(_ plateau: PlateauProtocol) -> String {
+/*
+    Renvoie les donnees du plateau sous forme de chaine de caractere
+    Parameters :
+        - plateau   Le plateau a afficher
+*/
+func str_plateau(_ plateau: Plateau) -> String {
     var str: String = ""
     for i in (0...1) {
         for j in (0...2) {
@@ -151,7 +159,7 @@ func str_plateau(_ plateau: PlateauProtocol) -> String {
         - p_joueur_actif    Le plateau du joueur actif
         - p_joueur_inactif  Le plateau du joueur inactif
 */
-func str_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) -> String {
+func str_champ_bataille(_ p_joueur_actif: Plateau, _ p_joueur_inactif: Plateau) -> String {
     var str: String = ""
     let empty: String = "VIDE"
 
@@ -173,7 +181,7 @@ func str_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: P
     Parameters :
         - main  La main a afficher
 */
-func str_main(_ main: MainProtocol) -> String {
+func str_main(_ main: Main) -> String {
     var str: String = ""
     for c in main {
         str += str_carte_stats(c) + "\n"
@@ -181,8 +189,12 @@ func str_main(_ main: MainProtocol) -> String {
     return str
 }
 
-
-func str_royaume(_ roy: RoyaumeProtocol) -> String {
+/*
+    Renvoie les donnees du royaume sous la forme de chaine de caractere
+    Parameters :
+        - roy   Le Royaume a afficher
+*/
+func str_royaume(_ roy: Royaume) -> String {
     var str: String = ""
     str += "Royaume (Du plus ancien au plus recent) : \n"
     for carte in roy {
@@ -213,7 +225,7 @@ func str_royaume(_ roy: RoyaumeProtocol) -> String {
     0   (0,1)   (1,1)   (2,1)   |   Arriere J1
           0       1       2
 
-          ==> par exemple : tab[2][1] renvoie la carte en position (1,0) du plateau du J2
+    ==> par exemple : tab[2][1] renvoie la carte en position (1,0) du plateau du J2
 */
 func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif: PlateauProtocol) -> [[Carte?]] {
     var tab = [[Carte?]]();
@@ -318,7 +330,8 @@ func tab_main(_ main: Main) -> [Main] {
 }
 
 /*
-    Propose au joueur de deployer une unite et de la placer sur son plateaus
+    Propose au joueur de deployer une unite et de la placer sur son plateau
+    Si la position renseignee est deja occupee, propose d'echanger les deux cartes. Si le joueur refuse
 */
 func deployer_carte(_ main: Main, _ plateau: Plateau) {
     // Affichage de la main du J1
@@ -348,7 +361,7 @@ func deployer_carte(_ main: Main, _ plateau: Plateau) {
         var posX = Int(input("Choisir la position x (verticale) ou assigner cette carte", ["0", "1", "2"]))
         var posY = Int(input("Choisir la position y (horizontale) ou assigner cette carte", ["0", "1"]))
 
-        var echanger : Bool = false
+        var echanger: Bool = false
         // Ajoute la carte au plateau
         do {
             try plateau.ajouter_plateau(carte_choisie, posX, posY)
@@ -362,12 +375,14 @@ func deployer_carte(_ main: Main, _ plateau: Plateau) {
         }
         if (echanger) {
             if let c2 = plateau.carte_en_position(posX, posY) {
-                main.ajouter_main(c2)
                 do {
+                    try plateau.retirer_plateau(c2)
                     try plateau.ajouter_plateau(carte_choisie, posX, posY)
+                    main.ajouter_main(c2)
+                    try main.retirer_main(carte_choisie)
                     placee = true
-                } catch{
-                    print ("erreur : Veuillez reessayer")
+                } catch {
+                    print("erreur : Veuillez reessayer")
                 }
             }
         }
@@ -428,7 +443,7 @@ func init_pioche() -> Pioche {
 // === INITIALISATION DE LA PARTIE ===
 
 // Instanciation des Mains
-var main_j1 = Main()
+var main_j1: Main = Main()
 var main_j2 = Main()
 
 // Instanciation des Royaumes
@@ -485,5 +500,11 @@ if let c = pioche_j2.piocher() {
 
 
 // Demande au J1 de choisir une carte de sa main
+print("Joueur 1")
+deployer_carte(main_j1, plateau_j1)
+
+// Demande au J2 de choisir une carte de sa main
+print("Joueur 2")
+deployer_carte(main_j2, plateau_j2)
 
 

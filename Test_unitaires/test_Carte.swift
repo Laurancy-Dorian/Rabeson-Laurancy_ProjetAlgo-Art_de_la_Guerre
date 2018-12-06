@@ -116,6 +116,39 @@ func test_puissance_attaque() -> Int{
     return 1;
 }
 
+func test_puissance_attaque2() -> Int{
+    var portee: [(Int, Int)] = [(1, 2), (0, 1)];
+    do {
+        try var c1 = Carte("Soldat", 3, 4, 3, portee);
+    } catch {}
+
+    do {
+        try c1.puissance_attaque(-1)
+        print("KO : la puissance d'attaque ne peut pas etre negative")
+        return 0
+    } catch {
+        print("OK")
+    }
+
+    do {
+        try c1.puissance_attaque(7)
+        print("KO : la puissance ne peut pas etre superieure au nombre max de cartes dans la main")
+        return 0
+    } catch {
+        print("OK")
+    }
+
+    do {
+        try c1.puissance_attaque(3)
+        print("OK")
+    } catch {
+        print("KO : la puissance d'attaque a mal ete attribuee")
+        return 0
+    }
+
+    return 1    
+}
+
 func test_pv_defensif() -> Int{
     print("== Test de pv_defensif() ==");
 
@@ -430,6 +463,9 @@ nb_test_ok += test_init();
 
 nb_test_tot += 1;
 nb_test_ok += test_puissance_attaque();
+
+nb_test_tot += 1;
+nb_test_ok += test_puissance_attaque2();
 
 nb_test_tot += 1;
 nb_test_ok += test_pv_defensif();

@@ -7,6 +7,7 @@
 
 
 // -- Fonctions d'interface -- //
+
 /*
   lire_input :  -> String?
   Lis la ligne courante et la renvoie sous forme de chaine de caractere
@@ -240,13 +241,46 @@ func align_champ_bataille(_ p_joueur_actif: PlateauProtocol, _ p_joueur_inactif:
 // -- Fonctions d'initialisations -- //
 
 /*
-    Initialise les pioches en y ajoutant 9 Cartes de type "soldat", 6 de type "garde" et 5 de type "archer"
+    Initialise une pioches en y ajoutant 9 Cartes de type "soldat", 6 de type "garde" et 5 de type "archer"
     retourne la pioche creee
 */
-func init_pioche (_ pioche : Pioche) -> Pioche {
+func init_pioche() -> Pioche {
+    var pioche = new Pioche()
+
+    let portee_soldat = [(0, 1)]
+    let portee_archers = [(1, 2), (-1, 2), (2, 1), (-2, 1)]
+
+    // Cree les 9 soldats
     for i in (0...8) {
-        var c = new Carte("Soldat", 1, )
+        do {
+            try var c = Carte("Soldat", 1, 2, 1, portee_soldat)
+        } catch {
+            fatalError("Erreur creation cartes soldats")
+        }
+        pioche.ajouter_pioche(c)
     }
+
+    // Cree les 6 gardes
+    for i in (0...5) {
+        do {
+            try var c = Carte("Garde", 1, 3, 2, portee_soldat)
+        } catch {
+            fatalError("Erreur creation cartes soldats")
+        }
+        pioche.ajouter_pioche(c)
+    }
+
+    // Cree les 5 archers
+    for i in (0...4) {
+        do {
+            try var c = Carte("Archer", 1, 2, 1, portee_archers)
+        } catch {
+            fatalError("Erreur creation cartes soldats")
+        }
+        pioche.ajouter_pioche(c)
+    }
+
+    return pioche
 }
 
 
@@ -254,11 +288,51 @@ func init_pioche (_ pioche : Pioche) -> Pioche {
 // ===== MAIN ===== //
 
 
-// -- Remplis les pioches des 2 joueurs de 9 soldats, 6 gardes et 5 archers
+// === INITIALISATION DE LA PARTIE ===
 
-// Instanciation des pioches
-var pioche_j1 = new Pioche()
-var pioche_j2 = new Pioche()
+// Instanciation des Mains
+var main_j1 = Main()
+var main_j2 = Main()
+
+// Instanciation des Royaumes
+var royaume_j1 = Royaume()
+var royaume_j2 = Royaume()
+
+// Instanciation des Plateaux
+var plateau_j1 = Plateau()
+var plateau_j2 = Plateau()
+
+
+// -- Remplis les pioches des 2 joueurs de 9 soldats, 6 gardes et 5 archers -- //
+
+// Instanciation des Pioches
+var pioche_j1 = init_pioche()
+var pioche_j2 = init_pioche()
+
+
+// --  Met dans les mains des 2 joueurs 1 roi (random) et les 3 premières cartes de la pioche (= piocher 3x) -- //
+
+// Instanciation des Rois
+do {
+    try var roi1 = Carte("Roi", 1, 4, 4, [(0, 1), (0, 2), (-1, 1), (1, 1)])
+    try var roi2 = Carte("Roi", 1, 5, 4, [(0, 1), (-1, 1), (1, 1)])
+} catch {
+    fatalError("Erreur creation cartes soldats")
+}
+
+// Ajout des Rois dans les Mains
+main_j1.ajouter_main(roi1)
+main_j2.ajouter_main(roi2)
+
+// Piocher + Ajout main
+for i in (1...3) {
+    main_j1.ajouter_main(pioche_j1.piocher())
+}
+for i in (1...3) {
+    main_j2.ajouter_main(pioche_j2.piocher())
+}
+
+// -- Piocher une carte dans la pioche et la placer dans le Royaume (pour les 2 joueurs) -- //
 
 
 

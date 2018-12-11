@@ -15,9 +15,9 @@
   La premiere colonne est a 0, la derniere est a 2
 
   Schema du Plateau pour un joueur :
-  1   (0,0)   (1,0)   (2,0)   |   Front J
-  0   (0,1)   (1,1)   (2,1)   |   Arriere J
-        0       1       2
+  1   (0,1)   (1,1)   (2,1)   |   Arriere
+  0   (0,0)   (1,0)   (2,0)   |   Front 
+  y/x   0       1       2
 
   Sur un Plateau d'un meme joueur on doit pouvoir :
     - y ajouter une carte

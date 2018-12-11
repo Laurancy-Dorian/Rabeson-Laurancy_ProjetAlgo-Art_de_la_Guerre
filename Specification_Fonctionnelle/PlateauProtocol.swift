@@ -66,6 +66,7 @@ public protocol PlateauProtocol: Sequence {
       Pre : la carte a retirer doit etre sur le plateau
       Pre : le plateau ne doit pas etre vide
       Post : la carte est retiree du plateau
+      Post : Lance une erreur si la precontion n'est pas respectee
     */
     mutating func retirer_plateau(_ carte: CarteProtocol) throws -> CarteProtocol
 

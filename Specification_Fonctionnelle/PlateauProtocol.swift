@@ -54,7 +54,7 @@ public protocol PlateauProtocol: Sequence {
       Pre : la case du plateau doit etre vide
       Post : la carte est ajoutee au plateau
       Post : lance une erreur si une carte est deja presente (n'ajoute pas la carte)
-      Post : lance une erreur si les coordonnes 
+      Post : lance une erreur si les coordonnes ne sont pas valides (<0 ou >=3)
       Post : lance une erreur si on essaie d'ajouter plusieurs fois une meme carte
     */
     mutating func ajouter_plateau(_ carte: CarteProtocol, _ posX: Int, _ posY: Int) throws

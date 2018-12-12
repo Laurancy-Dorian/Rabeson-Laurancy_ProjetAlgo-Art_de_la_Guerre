@@ -26,7 +26,10 @@ public protocol MainProtocol: Sequence {
       retire la carte de la main : la carte a retirer ne sera plus dans la Main
       Param : la carte a retirer
       Pre : La main ne doit pas etre vide
+      Pre: La carte doit faire partie de la main (erreur si ce n'est pas le cas)
       Post : renvoie la carte retiree si elle est retiree
+      (Note : renvoyer la carte est inutile car le parametre demande la reference
+      mais il s'agit plutot d'une verification)
     */
     mutating func retirer_main(_ carte: CarteProtocol) throws -> CarteProtocol
 
@@ -63,5 +66,5 @@ protocol MainProtocolIterator: IteratorProtocol {
       Pre :
       Post : retourne la carte suivante dans la collection de la Main, ou nil si on a atteint le fin de la collection
     */
-    func next() -> CarteProtocol? 
+    func next() -> CarteProtocol?
 }

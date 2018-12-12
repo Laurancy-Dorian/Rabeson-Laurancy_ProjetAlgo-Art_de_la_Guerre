@@ -55,7 +55,6 @@ public protocol PlateauProtocol: Sequence {
       Post : la carte est ajoutee au plateau
       Post : lance une erreur si une carte est deja presente (n'ajoute pas la carte)
       Post : lance une erreur si les coordonnes ne sont pas valides (<0 ou >=3)
-      Post : lance une erreur si on essaie d'ajouter plusieurs fois une meme carte
     */
     mutating func ajouter_plateau(_ carte: CarteProtocol, _ posX: Int, _ posY: Int) throws
 
@@ -128,7 +127,11 @@ public protocol PlateauProtocol: Sequence {
 
     /*
       tuer : PlateauProtocol x CarteProtocol -> PlateauProtocol
-      Supprime une carte du plateau
+      Supprime une carte du plateau et du jeu
+      Note : Cette fonction est l'equivalent de l'envoi au cimetiere, cependant,
+      un cimetiere est inutile dans cette version du jeu. La carte est juste Supprime
+      du plateau et ne sera pas reatribuee dans une autre collection : cela aura
+      pour effet de la supprimer du jeu.
       Pre : la carte doit etre sur le plateau
       Post : supprime la carte du plateau si elle meurt
     */

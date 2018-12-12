@@ -8,6 +8,7 @@
 		- Un statut (ou position) : Une carte peut etre en statut defensif ou offensif. En fonction de ce statut, elle peut ne pas avoir le meme nombre de PV
 		- Des PV en statut defensif
 		- Des PV en statut offensif
+        ==> PV : Points de vie (= defense dans les regles du jeu)
 		- Une portee : C'est la direction relative qu'une carte peut atteindre (on ne peut pas se taper soi-meme)
 		Par exemple : un archer peut atteindre les directions (-2 ; 1), (-1 ; 2), (1 ; 2), (2 ; 1)
 		par rapport a la position (x ; y) de la carte sur le Plateau. La direction (-2 ; 1) correspond a attaquer
@@ -42,7 +43,7 @@ public protocol CarteProtocol {
     // Pre : la puissance d'attaque doit etre prositive
     // Pre : la puissance d'attaque est comprise entre 1 et 6 (inclus)
     // Post : modifie la puissance d'attaque de la carte
-    mutating func puissance_attaque(_ puis_att: Int) 
+    mutating func puissance_attaque(_ puis_att: Int)
 
     // pv_defensif : CarteProtocol -> CarteProtocol x Int
     // Post : retourne les pv de la carte lorsqu'elle est en statut defensif
@@ -67,7 +68,7 @@ public protocol CarteProtocol {
     // La carte est en statut OFFENSIF si son statut est a 1.
     // Param : statut represente le nouveau statut de la carte
     // Pre : Statut ne peut unique prendre comme valeur 0 ou 1
-    // Post : Modifie le statut en fonction de la valeur en parametre (carte en 
+    // Post : Modifie le statut en fonction de la valeur en parametre (carte en
     //      offensif si 1, carte en defensif si 0)
     // 	Ne fait rien et genere une erreur si les precondition n'ont pas ete respectees
     mutating func statut(_ statut: Int) throws

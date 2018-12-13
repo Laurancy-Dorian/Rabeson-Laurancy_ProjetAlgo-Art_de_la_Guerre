@@ -33,7 +33,7 @@ public protocol RoyaumeProtocol: Sequence {
     mutating func retirer_royaume() throws -> CarteProtocol
 
     /*
-      est_vide : RoyaumeProtocol -> RoyaumeProtocol x Bool
+      est_vide : RoyaumeProtocol -> Bool
       Verifie si le Royaume est vide
       Pre :
       Post : retourne true si le Royaume est vide, false sinon
@@ -41,7 +41,7 @@ public protocol RoyaumeProtocol: Sequence {
     func est_vide() -> Bool
 
     /*
-      count_royaume : RoyaumeProtocol -> RoyaumeProtocol x Int
+      count_royaume : RoyaumeProtocol -> Int
       Compte le nombre de cartes dans le Royaume
       Pre :
       Post : retourne le nombre de cartes dans le Royaume
@@ -49,7 +49,7 @@ public protocol RoyaumeProtocol: Sequence {
     func count_royaume() -> Int
 
     /*
-      makeIterator : RoyaumeProtocol -> RoyaumeProtocol x RoyaumeProtocolIterator
+      makeIterator : RoyaumeProtocol -> RoyaumeProtocolIterator
       cree un iterateur sur la collection de cartes en FIFO (premiere carte ajoutee, premiere carte sortie)
     */
     func makeIterator() -> RoyaumeProtocolIterator 
@@ -69,5 +69,5 @@ protocol RoyaumeProtocolIterator: IteratorProtocol {
     Pre :
     Post : retourne la carte suivante dans la collection du Royaume, ou nil si on a atteint le fin de la collection
   */
-  func next() -> CarteProtocol? 
+  mutating func next() -> CarteProtocol? 
 }

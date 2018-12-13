@@ -34,21 +34,21 @@ public protocol MainProtocol: Sequence {
     mutating func retirer_main(_ carte: CarteProtocol) throws -> CarteProtocol
 
     /*
-      count_main : MainProtocol -> MainProtocol x Int
+      count_main : MainProtocol -> Int
       Pre :
       Post : retourne le nombre de carte dans la main
     */
     func count_main() -> Int
 
     /*
-      est_vide : MainProtocol -> MainProtocol x Bool
+      est_vide : MainProtocol -> Bool
       Pre :
       Post : retourne vrai si la main est vide
     */
     func est_vide() -> Bool
 
     /*
-      makeIterator : MainProtocol -> MainProtocol x MainProtocolIterator
+      makeIterator : MainProtocol -> MainProtocolIterator
       cree un iterateur sur la collection de cartes de la Main
     */
     func makeIterator() -> MainProtocolIterator
@@ -61,10 +61,10 @@ public protocol MainProtocol: Sequence {
 protocol MainProtocolIterator: IteratorProtocol {
 
     /*
-      next : MainProtocolIterator -> MainProtocol x CarteProtocol?
+      next : MainProtocolIterator -> MainProtocolIterator x CarteProtocol?
       renvoie la prochaine carte de la collection de la Main
       Pre :
       Post : retourne la carte suivante dans la collection de la Main, ou nil si on a atteint le fin de la collection
     */
-    func next() -> CarteProtocol?
+    mutating func next() -> CarteProtocol?
 }

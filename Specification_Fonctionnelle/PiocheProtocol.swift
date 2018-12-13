@@ -29,7 +29,7 @@ protocol PiocheProtocol {
     mutating func ajouter_pioche(_ carte: CarteProtocol)
 
     /*
-      count_pioche : PiocheProtocol -> PiocheProtocol x Int
+      count_pioche : PiocheProtocol -> Int
       Post : compte le nombre de carte dans la Pioche
     */
     func count_pioche() -> Int

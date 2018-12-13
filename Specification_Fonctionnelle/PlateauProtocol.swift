@@ -70,7 +70,7 @@ public protocol PlateauProtocol: Sequence {
     mutating func retirer_plateau(_ carte: CarteProtocol) throws -> CarteProtocol
 
     /*
-      position_carte : PlateauProtocol x CarteProtocol -> PlateauProtocol x (Int, Int)
+      position_carte : PlateauProtocol x CarteProtocol -> (Int, Int)
       Donne la position d'une carte sur le plateau
       Param : carte dont on veut savoir la position
       Pre : la carte doit etre sur le plateau
@@ -79,7 +79,7 @@ public protocol PlateauProtocol: Sequence {
     func position_carte(_ carte: CarteProtocol) -> (Int, Int)
 
     /*
-      carte_en_position : PlateauProtocol x Int x Int -> PlateauProtocol x CarteProtocol
+      carte_en_position : PlateauProtocol x Int x Int -> CarteProtocol
       Donne la carte a une position du plateau
       Param : position x et position y en entiers
       Pre : x doit etre compris entre 0 et 2
@@ -89,7 +89,7 @@ public protocol PlateauProtocol: Sequence {
     func carte_en_position(_ x: Int, _ y: Int) -> CarteProtocol?
 
     /*
-      est_occupee : PlateauProtocol x Int x Int -> PlateauProtocol x Bool
+      est_occupee : PlateauProtocol x Int x Int -> Bool
       Verifie si une case est occupee par une carte
       Pre : x doit etre compris entre 0 et 2
       Pre : y doit etre compris entre 0 et 1
@@ -130,7 +130,7 @@ public protocol PlateauProtocol: Sequence {
     mutating func reorganiser_plateau()
 
     /*
-      plateau_vide : PlateauProtocol -> PlateauProtocol x Bool
+      plateau_vide : PlateauProtocol -> Bool
       Verifie si le tableau est vide
       Pre :
       Post : retourne true si le tableau est vide, false sinon
@@ -150,7 +150,7 @@ public protocol PlateauProtocol: Sequence {
     mutating func tuer(_ carte: CarteProtocol) throws
 
     /*
-      count_cartes_qui_peuvent_attaquer : PlateauProtocol -> PlateauProtocol x Int
+      count_cartes_qui_peuvent_attaquer : PlateauProtocol -> Int
       Compte les cartes qui peuvent encore attaquer sur le plateau
       Les cartes qui peuvent encore attaquer pendant un tour sont les cartes en
       position defensive (les cartes qui ont deja attaque sont en position offensive)
@@ -161,7 +161,7 @@ public protocol PlateauProtocol: Sequence {
     func count_cartes_qui_peuvent_attaquer() -> Int
 
     /*
-      makeIterator : PlateauProtocol -> PlateauProtocol x PlateauProtocolIterator
+      makeIterator : PlateauProtocol -> PlateauProtocolIterator
       cree un iterateur sur la collection de cartes du Plateau
     */
     func makeIterator() -> PlateauProtocolIterator
@@ -187,5 +187,5 @@ protocol PlateauProtocolIterator : IteratorProtocol {
     Pre :
     Post : retourne la carte suivante dans la collection du Plateau, ou nil si on a atteint le fin de la collection
   */
-  func next() -> CarteProtocol?
+  mutating func next() -> CarteProtocol?
 }

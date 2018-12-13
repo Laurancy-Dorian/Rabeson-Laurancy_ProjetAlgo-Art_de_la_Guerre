@@ -7,11 +7,11 @@
     test_init : -> Int
     verifie si l'initialisation d'une carte est bien effectuee
     Une carte doit avoir :
-    - un type_carte qui est un String
-    - une puissance_attaque qui est un entier positif
-    - des pv_offensifs et pv_defensifs qui sont des entiers positifs
+    - un type_carte qui est un String non vide
+    - une puissance_attaque qui est un entier strictement positif
+    - des pv_offensifs et pv_defensifs qui sont des entiers strictement positifs
     - pv_defensif est plus grand que pv_offensif
-    - une portee qui est un tuple d'entier non-nuls
+    - une portee qui est un tableau de tuples d'entier non-nuls
 */
 func test_init() -> Int{
     print("== Test de l'init(String x Int x Int x Int x (Int,Int)[]) ==");

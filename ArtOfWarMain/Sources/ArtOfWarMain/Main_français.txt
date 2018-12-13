@@ -34,7 +34,8 @@ Tant que condition de fin pas remplie :
 
 	Si Attaquer :
 		Tant qu’il reste des cartes qui peuvent attaquer 
-		ET que le joueur veut continuer d’attaquer :
+		ET que le joueur veut continuer d’attaquer 
+		ET que des cartes sont à portée :
 			Choisir la carte qui attaque 
 			Choisir la carte à attaquer 
 			

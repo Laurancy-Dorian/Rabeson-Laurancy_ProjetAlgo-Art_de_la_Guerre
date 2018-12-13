@@ -107,7 +107,7 @@ public protocol PlateauProtocol: Sequence {
             - la carte attaquee doit etre sur le plateau attaque
       Post : retourne true si la carte est a portee, false sinon
     */
-    func est_a_portee(_ p_def: PlateauProtocol, _ c_att: CarteProtocol, _ c_def: CarteProtocol) -> Bool
+    func est_a_portee(_ p_def: Self, _ c_att: CarteProtocol, _ c_def: CarteProtocol) -> Bool
 
     /*
       reorganiser_plateau : PlateauProtocol -> PlateauProtocol

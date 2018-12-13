@@ -296,6 +296,8 @@ func tour_de_jeu(_ main: Main, _ pioche: Pioche, _ plateau: Plateau, _ royaume: 
 
 
 /*
+    Cette fonction permet seulement de simplifier l'affichage du champ de bataille
+
     ** Note et explication de la fonction **
     Cette fonction permet de voir le champ de bataille dans son ensemble en
     fonction du point de vue d'un des deux joueurs. En effet, la structure Plateau ne modelise
@@ -597,38 +599,8 @@ func phase_attaque(_ plateau_att: Plateau, _ plateau_def: Plateau, _ royaume_att
             }
             if (!err) {
                 // Verifie la portee
-
-                // Realigne les deux cartes sur le champ de bataille (pour determiner si les deux cartes sont a portee
-                var tab_champ_bataille = align_champ_bataille(plateau_att, plateau_def)
-                var x = 0;
-                var y = 0;
-
-                // Calcule les nouvelles coordonnees sur le champ de bataille global (leurs coordonnes etaient a la base seulement basees selon un plateau unique)
-                for ligne in tab_champ_bataille {
-                    for carte in ligne {
-                        if (c_att == carte) {
-                            posX_off = x
-                            posY_off = y
-                        } else if (c_def == carte) {
-                            posX_def = x
-                            posY_def = y
-                        }
-                        y += 1
-                    }
-                    x += 1
-                    y = 0
-                }
-
-                // Verifie la portee
-                var portee_ok: Bool = false
-                for p in c_att.portee() {
-                    if (p.0 + posX_off == posX_def && p.1 + posY_off == posY_def) {
-                        portee_ok = true
-                    }
-                }
-
                 // Si la carte est a portee : Attaque
-                if (portee_ok) {
+                if plateau_att.est_a_portee(plateau_def, c_att, c_def) {
 
                     // L'attaque du soldat est determinee en fonction du nbr de cartes en main
                     if (c_att.type_carte() == "Soldat") {

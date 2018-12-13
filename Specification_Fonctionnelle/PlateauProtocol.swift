@@ -98,6 +98,18 @@ public protocol PlateauProtocol: Sequence {
     func est_occupee(_ x: Int, _ y: Int) -> Bool
 
     /*
+      est_a_portee : PlateauProtocol x PlateauProtocol x CarteProtocol x CarteProtocol -> Bool
+      Verifie si une carte attaquee est a portee d'une carte attaquante 
+      Param : - p_def le plateau ennemi
+              - c_att la carte attaquante
+              - c_def la carte attaquee
+      Pre : - la carte attaquante doit etre sur le plateau attaquant
+            - la carte attaquee doit etre sur le plateau attaque
+      Post : retourne true si la carte est a portee, false sinon
+    */
+    func est_a_portee(_ p_def: PlateauProtocol, _ c_att: CarteProtocol, _ c_def: CarteProtocol) -> Bool
+
+    /*
       reorganiser_plateau : PlateauProtocol -> PlateauProtocol
       Reorganise les cartes sur le plateau
 
